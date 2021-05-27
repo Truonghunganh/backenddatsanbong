@@ -1,0 +1,237 @@
+1.	Tạo project : composer create-project --prefer-dist laravel/laravel blog
+2.	Node_modules : npm install
+3.	php artisan make:controller Amin/UserController --resource : 
+là tạo ra UserController có tất cả các phương thức ( là cái mẫu chuẩn cho laravel ) 
+
+4.	Create migration : php artisan make:migration +name
+5.	Create các bảng trong file database : 
+-tạo các bảng trong file database (migrate ): php artisan migrate(chạy hàm up())
+- tạo file dữ liệu : php artisan make:seeder UserSeeder
+-tạo dữ liệu từ các bảng trên : php artisan db:seed
+- Xóa tất cả các bảng : (chạy hàm down())
+
+
+
+
+a.	Trong larevel có 7 phương thức
+-	Index() :nó đại diện cho hiển thị danh sách của đối tượng đó
+-	Create() nó đại diện cho cái màng hình create , khi mà ta load cái form create lên 
+-	Store () : nó nhận request khi người dùng nhấn submit form  từ màng hình create lên server , tạo ra bảng ghi  mới
+-	Edit(): là cái form edit ( màn hình sữa )
+-	Update () : là cái method khi người dùng nhấn submit( gửi request lên server) từ màn hình edit để chỉnh sữa trong database
+-	Show() là xem chi tiết của 1 bảng ghi ( hiển thị thông tin của bảng ghi )
+-	Destroy() là xóa 1 hay nhiều bảng ghi 
+-	
+6. tạo model : php artisan make:model Products
+
+migrate:    php artisan make:migration name
+            run: php artisan migrate --path=Database/....
+model:      php artisan make:model Models/nameModel
+            php artisan make:model Models/nameModel -m : tạo model và migration
+
+seed:       php artisan make:seeder name
+            factory: php artisan make:factory name
+            run: php artisan db:seed --class=name
+ //"tymon/jwt-auth":"^1.0.0-rc.2"
+route:
+controller: php artisan make:controller API/V1/PromotionController
+validator for request: php artisan make:request --path name
+service:
+repository: interface + eloquent => bind Provider/RepositoryServiceProvider
+
+
+7. dùng tinker : php artisan tin 
+    Products::count()   : là xem có bao nhiêu phần tử trong bảng ghi
+    Products::first()   : xem phần tử đầu tiên
+    Products::where('id', 1)->get() : lấy Products có id =1
+
+
+8.migrate:    php artisan make:migration name
+    $table->bigIncrements('id');        : là khóa chính và tự động tăng
+    $table->string('email')->unique(); //phải có chuỗi đó và khóa ngoại
+            
+            
+
+Cài server cho visual code : 
+
+
+
+https://vncoder.vn/bai-hoc/cau-truc-project-laravel-2
+-	Exceptions: ngoại lệ
+-	Controller: người điều kiển
+-	
+
+
+
+php artisan make:model Models/nameModel
+class Products extends Model
+{
+    use HasFactory;
+    protected $table="products";
+    protected $fillable=[
+        'name' ,
+        'id_type',
+        'description',
+        'unit_price',
+        'promotion_price',
+        'image',
+        'unit' ,
+        'new' 
+                
+    ];
+    public function questions() {
+        return $this->belongsToMany(Question::class);
+    }
+    public function type_products(){
+        return $this->belongsTo('App\Models\Type_Products','id_type','id');
+        // id : ở đây là id của Products
+    }
+    public function bill_detail(){
+        return $this->hasMany('App\Models\Bill_Detail','id_product','id');
+    }
+}
+use HasFactory, Notifiable;
+    protected $table = 'users';
+    protected $fillable = [
+        'name',
+        'email',php artisan migrate:rollback
+        'password',
+    ];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+     protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
+    use HasFactory;
+    protected $table="customer";
+    public function bill()
+    {
+        return $this->hasMany('App\Bills', 'id_customer', 'id');
+    }
+
+
+
+
+
+
+
+
+
+
+
+    <?php
+
+namespace App\Http\Controllers\API\V1;
+
+use App\Services\CheckTokenService;
+use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpFoundation\Response;
+use App\Services\QuanService;
+use App\Services\ReviewService;
+use App\Services\CommentService;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+class CommentController extends Controller
+{
+    protected $checkTokenService;
+    protected $quanService;
+    protected $commentService;
+    protected $reviewService;
+    public function __construct(
+        CheckTokenService $checkTokenService,
+        QuanService $quanService,
+        ReviewService $reviewService, 
+        CommentService $commentService
+        ){
+        $this->checkTokenService = $checkTokenService;
+        $this->quanService = $quanService;
+        $this->commentService = $commentService;
+        $this->reviewService = $reviewService;
+    }
+    public function getAllCommentCuaMotQuan(Request $request)
+    {
+        return 2;
+        try {
+            $validator = Validator::make($request->all(), [
+
+                'idquan' => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                    'message' => $validator->errors()
+                ]);
+            }
+
+            $tonkenUser = $this->checkTokenService->checkTokenUser($request);
+            if (count($tonkenUser) > 0) {
+                $quan = $this->quanService->findByIdVaTrangThai($request->get('idquan'), 1);
+                if (!$quan) {
+                    return response()->json([
+                        'status' => false,
+                        'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                        'message' => "không tìm thấy quán này",
+                    ]);
+                }
+                $comments= $this->commentService->getAllCommentsCuaMotQuan($quan->id,$tonkenUser[0]);
+                return response()->json([
+                    'status'  => true,
+                    'code'    => Response::HTTP_OK,
+                    'comments' => $comments
+                ]);
+                $review= $this->reviewService->findReviewByIduserVaIdquan($tonkenUser[0]->id, $quan->id);
+                if (!$review) {
+                    $this->reviewService->addReview($tonkenUser[0]->id, $quan->id,0);
+
+                }
+                date_default_timezone_set("Asia/Ho_Chi_Minh");
+                $time = date('Y-m-d h:i:s');
+
+                if ($request->get('start_time') < $time) {
+                    return response()->json([
+                        'status' => false,
+                        'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                        'message' => "bạn phải đặt Trước thời gian hiện tại",
+                    ]);
+                }
+
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                    'message' => "token bị sai"
+                ]);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                'message' => $e->getMessage()
+            ]);
+        }   
+    }
+    public function store(Request $request)
+    {
+        return 1;
+    }
+    public function show($id)
+    {
+        //
+    }
+    public function update(Request $request, $id)
+    {
+        //
+    }
+    public function destroy($id)
+    {
+        //
+    }
+}
