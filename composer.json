@@ -36,10 +36,7 @@
     "extra": {
         "laravel": {
             "dont-discover": []
-        },
-        "symfony-app-dir": "app",
-        "symfony-bin-dir": "bin",
-        "symfony-var-dir": "var"
+        }
     },
     "autoload": {
         "psr-4": {

@@ -8,7 +8,6 @@ use App\Settings;
 
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -37,8 +36,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Schema::defaultStringLength(190);
-        //View::share('key', true);
+        View::share('key', true);
         // view()->composer('*', function (View $view) {
         //     $site_settings = Setting::all();
         //     $view->with('site_settings', $site_settings);

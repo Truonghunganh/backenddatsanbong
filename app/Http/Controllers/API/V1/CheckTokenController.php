@@ -40,13 +40,8 @@ class CheckTokenController extends Controller
         self::$b++;
         return self::$b;
     }
-    public function index()
-    {
-        return 'yyyyyyyyyyyy';
-    }
     public  function  thu(Request $request)
     {
-        return "hùng anh";
         $c=$this->settings->get("checkdatsan")+1;
         $this->settings->put('checkdatsan', $c);
         return $this->settings->get('checkdatsan');
