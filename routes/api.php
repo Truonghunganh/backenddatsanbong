@@ -15,7 +15,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('v1')->group(function () {
-    /// user 
+    /// user
+    Route::resource('thu', 'App\Http\Controllers\Api\V1\CheckTokenController')->only(['index', 'show', 'destroy']);
+ 
     Route::resource('quan', 'App\Http\Controllers\Api\V1\QuanController')->only(['index','show', 'destroy']);
     Route::resource('san', 'App\Http\Controllers\Api\V1\SanController')->only(['show']);
     Route::resource('datsans', 'App\Http\Controllers\Api\V1\DatSanController')->only(['store', 'destroy']);
