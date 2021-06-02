@@ -18,10 +18,10 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         $this->call([
-             UserTableSeeder::class,
-            QuanTableSeeder::class,
-            SanTableSeeder::class,
-            //DatSanTableSeeder::class, 
+            //  UserTableSeeder::class,
+            // QuanTableSeeder::class,
+            // SanTableSeeder::class,
+            DatSanTableSeeder::class, 
         ]);
         // $a=true;
         // for ($i=0; $i < 2; $i++) { 
