@@ -124,6 +124,14 @@ class UserController extends Controller
                     'message' => $validator->errors()
                 ]);
             }
+            $role=$request->get('role');
+            if ($role!="user"||$role!="innkeeper") {
+                return response()->json([
+                    'status' => false,
+                    'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                    'message' => "không đúng vai trò"
+                ]);
+            }
             $user= $this->userService->register($request);
             if ($user) {
                 return response()->json([
