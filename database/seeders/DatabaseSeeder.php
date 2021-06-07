@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             //  UserTableSeeder::class,
             // QuanTableSeeder::class,
             // SanTableSeeder::class,
-            DatSanTableSeeder::class, 
+           // DatSanTableSeeder::class, 
         ]);
         // $a=true;
         // for ($i=0; $i < 2; $i++) { 
