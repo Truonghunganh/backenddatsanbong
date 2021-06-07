@@ -15,9 +15,9 @@ use Illuminate\Support\Facades\Route;
 */
 $url= "App\Http\Controllers\API\V1";
 Route::prefix('v1')->group(function () {
-    /// user 
-    Route::resource('quan', 'App\Http\Controllers\Api\V1\QuanController')->only(['index','show', 'destroy']);
-    Route::resource('san', 'App\Http\Controllers\Api\V1\SanController')->only(['show']);
+    /// user  lllllllllllll
+    Route::resource('quan', $this->url."\QuanController")->only(['index','show', 'destroy']);
+    Route::resource('san', $this->url . '\SanController')->only(['show']);
     Route::resource('datsans', 'App\Http\Controllers\Api\V1\DatSanController')->only(['store', 'destroy']);
     Route::post('getQuanByIdAndTokenUser', 'App\Http\Controllers\API\V1\QuanController@getQuanByIdAndTokenUser');
     
