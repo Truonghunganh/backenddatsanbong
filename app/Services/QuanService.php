@@ -158,7 +158,10 @@ class QuanService
             date_default_timezone_set("Asia/Ho_Chi_Minh");
             $time = date('Y-m-d H:i:s');
             if ($request->hasFile('image')) {
-                File::delete($getQuanById->image); // xóa hình củ đi
+                try {
+                    File::delete($getQuanById->image); // xóa hình củ đi
+                } catch (\Throwable $th) {
+                }
                 $nameImage = $getQuanById->phone . "_" . str_replace(':', '_', $time) . "_" . $request->file('image')->getClientOriginalName();
                 $file = $request->file('image');
                 $file->move('image\Quan', $nameImage); // thêm hình mới 
