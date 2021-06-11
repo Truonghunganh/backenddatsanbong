@@ -18,7 +18,7 @@ Route::prefix('v1')->group(function () {
     /// user  lllllllllllll
     Route::resource('quan', "App\Http\Controllers\API\V1\QuanController")->only(['index','show', 'destroy']);
     Route::resource('san', "App\Http\Controllers\API\V1\SanController")->only(['show']);
-    Route::resource('datsans', 'App\Http\Controllers\Api\V1\DatSanController')->only(['store', 'destroy']);
+    Route::resource('datsans', 'App\Http\Controllers\API\V1\DatSanController')->only(['store', 'destroy']);
     Route::post('getQuanByIdAndTokenUser', 'App\Http\Controllers\API\V1\QuanController@getQuanByIdAndTokenUser');
     
     Route::get('getListDatSanByUserToken', 'App\Http\Controllers\API\V1\DatSanController@getListDatSanByUserToken');
@@ -38,8 +38,8 @@ Route::prefix('v1')->group(function () {
     
     // chủ quán : quản lý các quán của mình 
     Route::get('checkTokenInnkeeper', 'App\Http\Controllers\API\V1\CheckTokenController@checkTokenInnkeeper');
-    // Route::post('loginInnkeeper', 'App\Http\Controllers\Api\V1\ChuQuanController@loginInnkeeper');
-    // Route::post('registerInnkeeper', 'App\Http\Controllers\Api\V1\ChuQuanController@registerInnkeeper');
+    // Route::post('loginInnkeeper', 'App\Http\Controllers\API\V1\ChuQuanController@loginInnkeeper');
+    // Route::post('registerInnkeeper', 'App\Http\Controllers\API\V1\ChuQuanController@registerInnkeeper');
     Route::put('editInnkeeperByToken', 'App\Http\Controllers\API\V1\ChuQuanController@editInnkeeperByToken');
 
     Route::get('getQuanByIdAndTokenInnkeeper', 'App\Http\Controllers\API\V1\QuanController@getQuanByIdAndTokenInnkeeper');
@@ -76,7 +76,7 @@ Route::prefix('v1')->group(function () {
     // admin : quản lý các quán getDatSansvaSansByInnkeeperAndIdquanAndNgay,Route::post('getDoanhThuByInnkeeper', 'App\Http\Controllers\Api\V1\DoanhThuController@getDoanhThuByInnkeeper');
     
     Route::get('checkTokenAdmin', 'App\Http\Controllers\API\V1\CheckTokenController@checkTokenAdmin');
-    // Route::post('loginAdmin', 'App\Http\Controllers\Api\V1\AdminController@loginAdmin');
+    // Route::post('loginAdmin', 'App\Http\Controllers\API\V1\AdminController@loginAdmin');
     Route::put('editAdminByToken', 'App\Http\Controllers\API\V1\AdminController@editAdminByToken');
     Route::get('getListQuansDaPheDuyetByTokenAdmin', 'App\Http\Controllers\API\V1\QuanController@getListQuansDaPheDuyetByTokenAdmin');
     Route::get('getListQuansChuaPheDuyetByTokenAdmin', 'App\Http\Controllers\API\V1\QuanController@getListQuansChuaPheDuyetByTokenAdmin');
