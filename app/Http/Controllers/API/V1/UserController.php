@@ -121,7 +121,7 @@ class UserController extends Controller
                 return response()->json([
                     'status' => false,
                     'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
-                    'message' => $validator->errors()
+                    'message' =>"thông tin chưa đúng"
                 ]);
             }
             $role=$request->get('role');
