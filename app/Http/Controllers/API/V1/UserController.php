@@ -128,6 +128,7 @@ class UserController extends Controller
             if ($role!="user"||$role!="innkeeper") {
                 return response()->json([
                     'status' => false,
+                    'role'=>$role,
                     'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
                     'message' => "không đúng vai trò"
                 ]);
