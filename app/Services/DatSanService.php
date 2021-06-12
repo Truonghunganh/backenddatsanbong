@@ -313,8 +313,8 @@ class DatSanService
             date_default_timezone_set("Asia/Ho_Chi_Minh");
             $time = date('Y-m-d H:i:s');
             
-            DB::insert('insert into datsans (idsan, iduser,start_time,price,xacnhan,Create_time) values (?,?, ?,?, ?,?)',
-             [$request->get('idsan'), $iduser,$request->get('start_time'),$request->get('price'),false,$time]);
+            DB::insert('insert into datsans (id,idsan, iduser,start_time,price,xacnhan,Create_time) values (?, ?,?, ?,?, ?,?)',
+             [null,$request->get('idsan'), $iduser,$request->get('start_time'),$request->get('price'),false,$time]);
             
             // Datsan::updateOrCreate(
             //     [
