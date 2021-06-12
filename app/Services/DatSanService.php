@@ -312,20 +312,23 @@ class DatSanService
             }
             date_default_timezone_set("Asia/Ho_Chi_Minh");
             $time = date('Y-m-d H:i:s');
-        
-            Datsan::updateOrCreate(
-                [
-                    'id' => null
-                ],
-                [
-                    'idsan' => $request->get('idsan'),
-                    'iduser' => $iduser,
-                    'start_time' => $request->get('start_time'),
-                    'price' => $request->get('price'),
-                    'xacnhan' => false,
-                    'Create_time' => $time
-                ]
-            );
+            
+            DB::insert('insert into daatsans (idsan, iduser,start_time,price,xacnhan,Create_time) values (?,?, ?,?, ?,?)',
+             [$request->get('idsan'), $iduser,$request->get('start_time'),$request->get('price'),false,$time]);
+            
+            // Datsan::updateOrCreate(
+            //     [
+            //         'id' => null
+            //     ],
+            //     [
+            //         'idsan' => $request->get('idsan'),
+            //         'iduser' => $iduser,
+            //         'start_time' => $request->get('start_time'),
+            //         'price' => $request->get('price'),
+            //         'xacnhan' => false,
+            //         'Create_time' => $time
+            //     ]
+            // );
             DB::commit();
             return 9;
         } catch (\Exception $e) {
