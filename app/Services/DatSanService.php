@@ -304,12 +304,12 @@ class DatSanService
         return $datsans;
     }
     public function  addDatSan($request,$iduser){
+        $datsan = DatSan::where('idsan', $request->get('idsan'))->where('start_time', $request->get('start_time'))->first();
+        if ($datsan) {
+            return  78;
+        }
         DB::beginTransaction();
         try {
-            $datsan=DatSan::where('idsan',$request->get('idsan'))->where('start_time',$request->get('start_time'))->first();
-            if ($datsan) {
-                return  78;
-            }
             date_default_timezone_set("Asia/Ho_Chi_Minh");
             $time = date('Y-m-d H:i:s');
             
