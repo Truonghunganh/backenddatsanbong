@@ -10,7 +10,7 @@ là tạo ra UserController có tất cả các phương thức ( là cái mẫu
 -tạo dữ liệu từ các bảng trên : php artisan db:seed
 - Xóa tất cả các bảng : (chạy hàm down())
 
-
+jjj
 
 
 a.	Trong larevel có 7 phương thức
