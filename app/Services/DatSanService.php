@@ -308,7 +308,7 @@ class DatSanService
         try {
             $datsan=DatSan::where('idsan',$request->get('idsan'))->where('start_time',$request->get('start_time'))->first();
             if ($datsan) {
-                return  false;
+                return  78;
             }
             date_default_timezone_set("Asia/Ho_Chi_Minh");
             $time = date('Y-m-d H:i:s');
@@ -327,10 +327,10 @@ class DatSanService
                 ]
             );
             DB::commit();
-            return true;
+            return 9;
         } catch (\Exception $e) {
             DB::rollBack();
-            return false;
+            return 8;
         }
         return false;
     }

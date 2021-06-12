@@ -73,6 +73,11 @@ class DatSanController extends Controller
                 if ($this->checkddatsan) {
                     $this->settings->put('checkdatsan', false);
                     $datsan = $this->datSanService->addDatSan($request, $tonkenUser->id);
+                    return response()->json([
+                        'status'  => true,
+                        'code'    => Response::HTTP_OK,
+                        'datsan' => $datsan
+                    ]);                                                                         
                     if ($datsan) {
                        $this->settings->put('checkdatsan', true);
                         return response()->json([
