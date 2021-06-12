@@ -320,7 +320,7 @@ class DatSanService
                 "xacnhan" =>false, 
                 "Create_time"=> $time
             ];
-            return $data;
+         //   return $data;
              DB::table('datsans')->insert($data);
            
             // DB::insert('insert into datsans (id,idsan, iduser,start_time,price,xacnhan,Create_time) values (?, ?,?, ?,?, ?,?)',
