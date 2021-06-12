@@ -94,6 +94,7 @@ class DatSanController extends Controller
                         ]);
                     }
                 } else {
+                    $this->settings->put('checkdatsan', true);
                     return response()->json([
                         'status' => false,
                         'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
@@ -102,12 +103,12 @@ class DatSanController extends Controller
                 }
             }
             else {
+                $this->settings->put('checkdatsan', true);
                 return response()->json([
                     'status' => false,
                     'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
                     'message' => "token bị sai"
                 ]);
-
             }
         } catch (\Exception $e) {
             $this->settings->put('checkdatsan', true);
