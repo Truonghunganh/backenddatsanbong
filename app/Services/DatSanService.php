@@ -333,7 +333,7 @@ class DatSanService
             return 9;
         } catch (\Exception $e) {
             DB::rollBack();
-            return 8;
+            return $e->getMessage();
         }
         return false;
     }
