@@ -310,15 +310,15 @@ class DatSanService
         }
         DB::beginTransaction();
         try {
-            return DB::table('datsans')->where('id',46)->first();
+           // return DB::table('datsans')->where('id',46)->first();
             date_default_timezone_set("Asia/Ho_Chi_Minh");
             $time = date('Y-m-d H:i:s');
             $data=[
                 "idsan" =>$request->get('idsan'),
-                "iduser" =>$iduser, 
+                "iduser" =>$iduser,
                 "start_time" =>$request->get('start_time'),
                 "price"=>$request->get('price'),
-                "xacnhan" =>false, 
+                "xacnhan" =>false,
                 "Create_time"=> $time
             ];
          //   return $data;
