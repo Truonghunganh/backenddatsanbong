@@ -308,7 +308,7 @@ class DatSanService
     public function  addDatSan($request,$iduser){
         $datsan = DatSan::where('idsan', $request->get('idsan'))->where('start_time', $request->get('start_time'))->first();
         if ($datsan) {
-            return  78;
+            return  false;
         }
         DB::beginTransaction();
         try {
@@ -318,36 +318,20 @@ class DatSanService
             $data=[
                 "idsan" =>$request->get('idsan'),
                 "iduser" =>$iduser,
-                "start_time" => "2021-06-14 10:00:00",
+                "start_time" => $request->get('start_time'),
                 "price"=>$request->get('price'),
                 "xacnhan" =>false,
-                "Create_time"=>Carbon::now()
+                "Create_time"=> $time
 
             ];
-            //   return $data;
+            
             Datsan::insert($data);
            
-            // DB::insert('insert into datsans (id,idsan, iduser,start_time,price,xacnhan,Create_time) values (?, ?,?, ?,?, ?,?)',
-            //  [null,$request->get('idsan'), $iduser,$request->get('start_time'),$request->get('price'),false,$time]);
-            
-            // Datsan::updateOrCreate(
-            //     [
-            //         'id' => null
-            //     ],
-            //     [
-            //         'idsan' => $request->get('idsan'),
-            //         'iduser' => $iduser,
-            //         'start_time' => $request->get('start_time'),
-            //         'price' => $request->get('price'),
-            //         'xacnhan' => false,
-            //         'Create_time' => $time
-            //     ]
-            // );
             DB::commit();
-            return 9;
+            return true;
         } catch (\Exception $e) {
             DB::rollBack();
-            return $e->getMessage();
+            return false;
         }
         return false;
     }
