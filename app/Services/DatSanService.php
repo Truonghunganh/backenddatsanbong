@@ -316,7 +316,6 @@ class DatSanService
             date_default_timezone_set("Asia/Ho_Chi_Minh");
             $time = date('Y-m-d H:i:s');
             $data=[
-                "id"=>1,
                 "idsan" =>$request->get('idsan'),
                 "iduser" =>$iduser,
                 "start_time" => "2021-06-14 10:00:00",
