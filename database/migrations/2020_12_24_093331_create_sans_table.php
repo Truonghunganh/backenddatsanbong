@@ -15,7 +15,7 @@ class CreateSansTable extends Migration
             $table->integer('numberpeople');
             $table->boolean('trangthai');
             $table->bigInteger('priceperhour');
-            $table->dateTime('createtime');
+            $table->dateTime('Create_time');
             $table->foreign('idquan')->references('id')->on('quans');
           
         });

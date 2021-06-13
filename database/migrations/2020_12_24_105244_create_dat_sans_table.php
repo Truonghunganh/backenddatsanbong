@@ -14,10 +14,10 @@ class CreateDatSansTable extends Migration
             $table->foreign('idsan')->references('id')->on('sans')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('iduser')->unsigned();
             $table->foreign('iduser')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->dateTime('starttime');
+            $table->dateTime('start_time');
             $table->bigInteger('price');
             $table->boolean('xacnhan');
-            $table->dateTime('createtime');
+            $table->dateTime('Create_time');
            
         });
         // Schema::create('datsans', function (Blueprint $table) {
