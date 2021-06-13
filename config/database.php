@@ -72,7 +72,7 @@ return [
             'database' => env('DB_DATABASE', 'd9oershm9suo1i'),
             'username' => env('DB_USERNAME', 'tsbgihqbdjsulu'),
             'password' => env('DB_PASSWORD', '987d540ba43c555b023a710294b2ec657b98106d0f286f4b82b8f0da317717b3'),
-            'charset' => 'utf8',
+            'charset' => 'utf8mb4',
             'prefix' => '',
             'prefix_indexes' => true,
             'schema' => 'public',
