@@ -84,7 +84,11 @@ class CommentService
                 $this->reviewService->addReview($iduser, $idquan, 0);
                 $review = $this->reviewService->findReviewByIduserVaIdquan($iduser, $idquan);
             }
-            DB::insert('insert into comments (idreview, binhluan,Create_time) values (?, ?,?)', [$review->id, $binhluan, $time]);
+            $data= [
+                "idreview"=>$review->id, 
+               "binhluan" =>$binhluan, 
+               "Create_time"=>$time];
+            Comment::insert($data);
             DB::commit();
             return $this->getAllCommentsCuaMotQuan($idquan, $user);
         } catch (\Exception $e) {

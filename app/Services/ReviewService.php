@@ -40,7 +40,12 @@ class ReviewService
     public function addReview($iduser,$idquan,$review){
         date_default_timezone_set("Asia/Ho_Chi_Minh");
         $time = date('Y-m-d h:i:s');
-        DB::insert('insert into reviews (iduser, idquan,review,Review_time) values (?, ?,?,?)', [$iduser, $idquan, $review, $time]);
+        $date =[
+           "iduser" =>$iduser,
+           "idquan" =>$idquan, 
+           "review" =>$review,
+           "Review_time" =>$time];
+        Review::insert($date);
     }
     public function findById($id){
         return Review::find($id);
