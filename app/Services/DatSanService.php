@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use Carbon\Carbon;
+
 use App\Services\CheckTokenService;
 use App\Models\Models\DoanhThu;
 use App\Services\QuanService;
@@ -317,10 +319,11 @@ class DatSanService
                 "id"=>1,
                 "idsan" =>$request->get('idsan'),
                 "iduser" =>$iduser,
-                "start_time" =>$request->get('start_time'),
+                "start_time" => "2021-06-14 10:00:00",
                 "price"=>$request->get('price'),
                 "xacnhan" =>false,
-                "Create_time"=> $time
+                "Create_time"=>Carbon::now()
+
             ];
             //   return $data;
             Datsan::insert($data);
