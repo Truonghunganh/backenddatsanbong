@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->string('address');
             $table->string('password');
             $table->longText('token')->nullable()->index();
-            $table->dateTime('Create_time');
+            $table->dateTime('createtime');
         });
     }
 

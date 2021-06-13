@@ -18,7 +18,7 @@ class CreateQuansTable extends Migration
             $table->double('vido');
             $table->double('kinhdo');
             $table->boolean('trangthai');
-            $table->dateTime('Create_time');
+            $table->dateTime('createtime');
             $table->double('review');
             
         });

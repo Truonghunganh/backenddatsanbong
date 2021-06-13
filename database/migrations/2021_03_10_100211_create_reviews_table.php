@@ -18,7 +18,7 @@ class CreateReviewsTable extends Migration
             $table->integer('iduser')->unsigned();
             $table->integer('idquan')->unsigned();
             $table->integer('review');
-            $table->dateTime('Review_time');
+            $table->dateTime('reviewtime');
             $table->foreign('iduser')->references('id')->on('users');
             $table->foreign('idquan')->references('id')->on('quans');
           
