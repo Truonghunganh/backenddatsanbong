@@ -163,34 +163,29 @@ class QuanService
                 } catch (\Throwable $th) {
                 }
                 $nameImage = $getQuanById->phone . "_" . str_replace(':', '_', $time) . "_" . $request->file('image')->getClientOriginalName();
+             
                 $file = $request->file('image');
                 $file->move('image\Quan', $nameImage); // thêm hình mới 
-                DB::update(
-                    'update quans set name=?,image=?,address=?,linkaddress=?,Create_time=?,kinhdo=?,vido=? where id = ?',
-                    [
-                        $request->get('name'),
-                        "image/Quan/" . $nameImage,
-                        $request->get('address'),
-                        $request->get('linkaddress'),
-                        $time,
-                        $request->get('kinhdo'),
-                        $request->get('vido'),
-                        $request->get('id')
-                    ]
-                );
+                $update=Quan::find($request->get('id'));
+                $update->name=$request->get('name');
+                $update->image="image/Quan/" . $nameImage;
+                $update->address=$request->get('address');
+                $update->linkaddress=$request->get('linkaddress');
+                $update->Create_time=$time;
+                $update->kinhdo=$request->get('kinhdo');
+                $update->vido=$request->get('vido');
+                $update->save();
+                        
             } else {
-                DB::update(
-                    'update quans set name=?,address=?,linkaddress=?,Create_time=?,kinhdo=?,vido=? where id = ?',
-                    [
-                        $request->get('name'),
-                        $request->get('address'),
-                        $request->get('linkaddress'),
-                        $time,
-                        $request->get('kinhdo'),
-                        $request->get('vido'),
-                        $request->get('id')
-                    ]
-                );
+                $update = Quan::find($request->get('id'));
+                $update->name = $request->get('name');
+                $update->address = $request->get('address');
+                $update->linkaddress = $request->get('linkaddress');
+                $update->Create_time = $time;
+                $update->kinhdo = $request->get('kinhdo');
+                $update->vido = $request->get('vido');
+                $update->save();
+                
             }
             DB::commit();
             return true;
