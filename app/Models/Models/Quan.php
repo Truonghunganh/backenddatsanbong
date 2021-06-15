@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Quan extends Model
 {
+    public $timestamps = false;
     const ACTIVE_QUAN = 1;
     const INACTIVE_QUAN = 0;
     use HasFactory;

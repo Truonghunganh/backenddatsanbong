@@ -166,6 +166,7 @@ class QuanService
              
                 $file = $request->file('image');
                 $file->move('image\Quan', $nameImage); // thêm hình mới 
+                 
                 $update=Quan::find($request->get('id'));
                 $update->name=$request->get('name');
                 $update->image="image/Quan/" . $nameImage;
