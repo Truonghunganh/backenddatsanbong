@@ -191,7 +191,7 @@ class DatSanController extends Controller
     public function deleteDatsanByInnkeeper(Request $request){
         try {
             $id=$request->get('iddatsan');
-            $user = $this->checkTokenService->checkTokenUser($request);
+            $user = $this->checkTokenService->checkTokenInnkeeper($request);
             if ($user) {
                 $datsan = $this->datSanService->find($id);
                 if (!$datsan) {
