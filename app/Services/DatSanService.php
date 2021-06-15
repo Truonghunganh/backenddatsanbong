@@ -397,7 +397,7 @@ class DatSanService
         return DatSan::where('idsan',$idsan)->where('start_time',$start_time)->first();
     }
 
-    public function getAllDatSanByIdquan($idquan,$xacnhan,$time,$dau, $soluong = 10){
+    public function getAllDatSanByIdquan($idquan,$xacnhan,$time,$dau){
         $sans=$this->sanService->getSansByIdquan($idquan);
         $nam= substr($time, 0, 4);
         $thang= substr($time,5, 2);
@@ -405,9 +405,9 @@ class DatSanService
         $datsansnew=[];
         foreach ($sans as $san) {
             if ($dau=="=") {
-                $datsans = DatSan::where('idsan', $san->id)->paginate($soluong)->where('xacnhan', $xacnhan)->whereYear("start_time", $dau, $nam)->whereMonth("start_time", $dau, $thang)->whereDay("start_time", $dau, $ngay)->get();
+                $datsans = DatSan::where('idsan', $san->id)->where('xacnhan', $xacnhan)->whereYear("start_time", $dau, $nam)->whereMonth("start_time", $dau, $thang)->whereDay("start_time", $dau, $ngay)->get();
             } else {
-                $datsans = DatSan::where('idsan', $san->id)->paginate($soluong)->where('xacnhan', $xacnhan)->where("start_time", $dau, $time)->get();
+                $datsans = DatSan::where('idsan', $san->id)->where('xacnhan', $xacnhan)->where("start_time", $dau, $time)->get();
             }
             
             foreach ($datsans as $datsan) {
