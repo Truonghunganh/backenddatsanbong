@@ -64,6 +64,7 @@ Route::prefix('v1')->group(function () {
     Route::put('xacNhanDatsanByInnkeeper', 'App\Http\Controllers\API\V1\DatSanController@xacNhanDatsanByInnkeeper');
     Route::post('getTongDoanhThuTheoNamByInnkeeper', 'App\Http\Controllers\API\V1\DoanhThuController@getTongDoanhThuTheoNamByInnkeeper');
     Route::post('getDatSansvaSansByInnkeeperAndIdquanAndNgay', 'App\Http\Controllers\API\V1\DatSanController@getDatSansvaSansByInnkeeperAndIdquanAndNgay');
+    Route::post('deleteDatsanByInnkeeper', 'App\Http\Controllers\API\V1\DatSanController@deleteDatsanByInnkeeper');
     Route::post('getChiTietDanhthuByInnkeeper', 'App\Http\Controllers\API\V1\DoanhThuController@getChiTietDanhthuByInnkeeper');
     Route::post('thayDoiTrangthaiSanByInnkeeper', 'App\Http\Controllers\API\V1\SanController@thayDoiTrangthaiSanByInnkeeper');
     Route::get('getAllCommentCuaMotQuanByInnkeeper', 'App\Http\Controllers\API\V1\CommentController@getAllCommentCuaMotQuanByInnkeeper');

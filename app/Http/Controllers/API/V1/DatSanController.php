@@ -22,6 +22,7 @@ class DatSanController extends Controller
     protected $doanhThuService;
     protected $reviewService;
     protected $settings;
+    protected $quanService;
     private $checkddatsan;
     public function __construct(
         DatSanService $datSanService,
@@ -187,6 +188,84 @@ class DatSanController extends Controller
         }
     }
 
+    public function deleteDatsanByInnkeeper(Request $request){
+        try {
+            $id=$request->get('iddatsan');
+            $user = $this->checkTokenService->checkTokenUser($request);
+            if ($user) {
+                $datsan = $this->datSanService->find($id);
+                if (!$datsan) {
+                    return response()->json([
+                        'status' => false,
+                        'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                        'message' => "không tìm thấy id đặt sân này "
+                    ]);
+                }
+
+                $san = $this->sanService->findById($datsan->idsan);
+                if (!$san) {
+                    return response()->json([
+                        'status' => false,
+                        'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                        'message' => "không tìm thấy sân bởi idsan = " . $datsan->idsan
+                    ]);
+                }
+                $quan = $this->quanService->findById($san->idquan);
+                if (!$quan) {
+                    return response()->json([
+                        'status' => false,
+                        'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                        'message' => "không tìm thấy sân bởi idquan = " . $san->idquan
+                    ]);
+                }
+                
+                if ($user->phone != $quan->phone) {
+                    return response()->json([
+                        'status' => false,
+                        'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                        'message' => "token này không có quyền tri cập đến đặt sân này"
+                    ]);
+                }
+                
+                date_default_timezone_set("Asia/Ho_Chi_Minh");
+                $time = date('Y-m-d H:i:s');
+                $time = strftime("%Y-%m-%d %H:%M:%S", strtotime(date("Y-m-d H:i:s", strtotime($time)) . "+1 days"));
+                if ($time > $datsan->start_time && $datsan->xacnhan) {
+                    return response()->json([
+                        'status' => false,
+                        'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                        'message' => "không thể xóa được vì thời gian hủy đặt sân phải trước 1 ngày"
+                    ]);
+                }
+                $ds = $this->datSanService->deleteDatsan($id, $san, $datsan);
+                if ($ds) {
+                    return response()->json([
+                        'status' => true,
+                        'code' => Response::HTTP_OK,
+                        'message' => "xóa thành công đặt sân",
+                    ]);
+                } else {
+                    return response()->json([
+                        'status' => false,
+                        'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                        'message' => "Xóa đặt sân thất bại"
+                    ]);
+                }
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                    'message' => "token user false"
+                ]);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
     public function destroy(Request $request,$id){
         try {
             $user = $this->checkTokenService->checkTokenUser($request);
