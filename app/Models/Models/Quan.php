@@ -16,7 +16,10 @@ class Quan extends Model
         'name',
         'image',
         'address',
-        'phone'
+        'phone',
+        'linkaddress',
+        'kinhdo',
+        'vido'
            
     ];
 
