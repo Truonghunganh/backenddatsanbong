@@ -37,10 +37,10 @@ class UserService
     }
     public function searchUsersByAdmin($role,$search){
         $users= User::select(["id", "name", "phone", "gmail", "address"])->where("role", "=", $role)->where(function($query) use ($search) {
-        $query->where('name', 'like', "%$search%")
-        ->orWhere("phone", 'like', "%$search%")
-        ->orWhere('address', 'like', "%$search%")
-        ->orWhere('gmail', 'like', "%$search%");
+        $query->where('name', 'like', '%' . strtolower($search) . '%')
+        ->orWhere("phone", 'like', '%' . strtolower($search) . '%')
+        ->orWhere('address', 'like', '%' . strtolower($search) . '%')
+        ->orWhere('gmail', 'like', '%' . strtolower($search) . '%');
         })->get();
         return $users;
     }
