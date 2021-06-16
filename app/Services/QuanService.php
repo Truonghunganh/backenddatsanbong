@@ -29,9 +29,9 @@ class QuanService
         
         return Quan::where('trangthai',$trangthai)
         ->where(function ($query) use ($search) {
-            $query->where('LOWER(name)', 'LIKE', '%' . strtolower($search) . '%')
-                  ->orWhere('LOWER(address)','LIKE', '%' . strtolower($search) . '%')
-                  ->orWhere('LOWER(phone)','LIKE', '%' . strtolower($search) . '%');
+            $query->where('name', 'ILIKE', '%' . strtolower($search) . '%')
+                  ->orWhere('address','ILIKE', '%' . strtolower($search) . '%')
+                  ->orWhere('phone','ILIKE', '%' . strtolower($search) . '%');
         })->get();
        
     }
