@@ -58,7 +58,7 @@ class UserService
             }
             $user->name=$request->get("name");
             $user->phone=$request->get("phone");
-            $user->email=$request->get("email");
+            $user->gmail=$request->get("gmail");
             $user->address=$request->get("address");
             $user->password= bcrypt($request->get("password"));
             $user->Create_time=$time;
