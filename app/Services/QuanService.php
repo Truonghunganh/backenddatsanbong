@@ -29,10 +29,10 @@ class QuanService
         
         return Quan::where('trangthai',$trangthai)
         ->where(function ($query) use ($search) {
-            
-            $query->where('LOWER(name)', 'LIKE', "LOWER(%{$search}%)")
-                  ->orWhere('LOWER(name)', 'LIKE', "LOWER(%{$search}%)")
-                  ->orWhere('LOWER(name)', 'LIKE', "LOWER(%{$search}%)");
+
+            $query->where('name', 'LIKE', "LOWER(%{$search}%)")
+                  ->orWhere('name', 'LIKE', "LOWER(%{$search}%)")
+                  ->orWhere('name', 'LIKE', "LOWER(%{$search}%)");
         })->get();
        
     }
