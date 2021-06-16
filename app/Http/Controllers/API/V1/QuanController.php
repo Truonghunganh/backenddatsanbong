@@ -600,7 +600,7 @@ class QuanController extends Controller
     {
         try {
             $a=1;
-            $quans = $this->quanService->searchListQuans(Quan::ACTIVE_QUAN,$request->get("search"));
+            $quans = $this->quanService->searchListQuans(true,$request->get("search"));
             return response()->json([
                 'status'  => true,
                 'code'    => Response::HTTP_OK,
