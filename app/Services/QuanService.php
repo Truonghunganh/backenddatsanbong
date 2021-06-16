@@ -25,7 +25,7 @@ class QuanService
     }
     public function searchListQuans($trangthai,$search){
         
-        return Quan::where('trangthai',$trangthai)->where('name', 'like', '%' . $search . '%')->get();
+        //return Quan::where('trangthai',$trangthai)->where('name', 'like', '%' . $search . '%')->get();
         
         return Quan::where('trangthai',$trangthai)
         ->where(function ($query) use ($search) {
