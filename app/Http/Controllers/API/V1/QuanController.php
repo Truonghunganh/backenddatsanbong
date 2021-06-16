@@ -609,7 +609,7 @@ class QuanController extends Controller
                 'status'  => true,
                 'code'    => Response::HTTP_OK,
                 'quans' => $quans,
-                'a' => $a,
+               // 'a' => $a,
                 'search'=>$request->get("search")
             ]);
         } catch (\Exception $e1) {
