@@ -29,10 +29,9 @@ class QuanService
         
         return Quan::where('trangthai',$trangthai)
         ->where(function ($query) use ($search) {
-            $query->where('name', 'like', '%' . $search . '%');
-
-                 // ->orWhere('address', 'like', '%' . $search . '%')
-                  //->orWhere('phone', 'like', '%' . $search . '%');
+            $query->where('name', 'LIKE', "%{$search}%")
+                  ->orWhere('address', 'LIKE', "%{$search}%")
+                  ->orWhere('phone', 'LIKE', "%{$search}%");
         })->get();
        
     }
