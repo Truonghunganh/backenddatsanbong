@@ -56,25 +56,19 @@ class UserService
             if ($user->role=="innkeeper") {
                 $this->quanService->suaSoDienThoai($user->phone,$request->get("phone"));
             }
-            DB::update(
-                'update users set name=?,phone=?,gmail=?,address=?,password=?,Create_time=? where id = ?',
-                [
-                    $request->get('name'),
-                    $request->get('phone'),
-                    $request->get('gmail'),
-                    $request->get('address'),
-                    bcrypt($request->get('password')),
-                    $time,
-                    $id
-                ]
-            );
+            $user->name=$request->get("name");
+            $user->phone=$request->get("phone");
+            $user->email=$request->get("email");
+            $user->address=$request->get("address");
+            $user->password= bcrypt($request->get("password"));
+            $user->Create_time=$time;
+            $user->save();
             $user = User::where("id", "=", $id)->first();
             if ($user) {
                 $token = JWTAuth::fromUser($user);
-                DB::update(
-                    'update users set token = ? where phone = ?',
-                    [$token, $request->get('phone')]
-                );
+                $user->token=$token;
+                $user->save();
+                
             } else {
                 return false;
             }
