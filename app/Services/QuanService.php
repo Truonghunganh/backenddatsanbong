@@ -25,14 +25,15 @@ class QuanService
     }
     public function searchListQuans($trangthai,$search){
         
-        return Quan::where('trangthai',$trangthai)->get();
+        //return Quan::where('trangthai',$trangthai)->get();
         
-        // return Quan::where('trangthai',$trangthai)
-        // ->where(function ($query) use ($search) {
-        //     $query->where('name', 'like', '%' . $search . '%')
-        //           ->orWhere('address', 'like', '%' . $search . '%')
-        //           ->orWhere('phone', 'like', '%' . $search . '%');
-        // })->get();
+        return Quan::where('trangthai',$trangthai)
+        ->where(function ($query) use ($search) {
+            $query->where('name', 'like', '%' . $search . '%');
+            
+                 // ->orWhere('address', 'like', '%' . $search . '%')
+                  //->orWhere('phone', 'like', '%' . $search . '%');
+        })->get();
        
     }
     public function searchListQuans1($trangthai,$search)
