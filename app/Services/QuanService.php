@@ -42,9 +42,9 @@ class QuanService
         for ($i=0; $i <count($mang) ; $i++) { 
             $a=$mang[$i];
             $quans->where( function ($query)use ($a) {
-                $query->where('name', 'like', '%' . $a . '%')
-                    ->orwhere('address', 'like', '%' . $a . '%')
-                    ->orwhere('phone', 'like', '%' . $a . '%');
+                $query->where('name', 'like', '%' . strtolower( $a) . '%')
+                    ->orwhere('address', 'like', '%' . strtolower($a) . '%')
+                    ->orwhere('phone', 'like', '%' . strtolower($a). '%');
             });
         };
         return $quans->get();

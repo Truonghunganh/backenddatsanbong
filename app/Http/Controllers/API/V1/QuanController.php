@@ -599,25 +599,14 @@ class QuanController extends Controller
     public function searchListQuans(Request $request)
     {
         try {
-            $a=1;
             $quans = $this->quanService->searchListQuans(true,$request->get("search"));
-            return response()->json([
-                'status'  => true,
-                'code'    => Response::HTTP_OK,
-                'quans' => $quans,
-                // 'a' => $a,
-                'search' => $request->get("search")
-            ]);
             if (count($quans) == 0) {
-                $a = 2;
                 $quans = $this->quanService->searchListQuans1(Quan::ACTIVE_QUAN,$request->get("search"));
             }
             return response()->json([
                 'status'  => true,
                 'code'    => Response::HTTP_OK,
                 'quans' => $quans,
-               // 'a' => $a,
-                'search'=>$request->get("search")
             ]);
         } catch (\Exception $e1) {
             return response()->json([
