@@ -41,7 +41,7 @@ class ReviewService
         DB::beginTransaction();
         try {
             date_default_timezone_set("Asia/Ho_Chi_Minh");
-            $time = date('Y-m-d H:i:s');
+            $time = date('Y-M-D H:I:S');
             $date = [
                     "iduser" => $iduser,
                     "idquan" => $idquan,
