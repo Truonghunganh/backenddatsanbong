@@ -87,24 +87,18 @@ class UserService
             date_default_timezone_set("Asia/Ho_Chi_Minh");
             $time = date('Y-m-d H:i:s');
             $token = "";
-            DB::update(
-                'update users set name=?,gmail=?,address=?,password=?,Create_time=? where id = ?',
-                [
-                    $request->get('name'),
-                    $request->get('gmail'),
-                    $request->get('address'),
-                    bcrypt($request->get('password')),
-                    $time,
-                    $id
-                ]
-            );
+            $user = User::where("id", "=", $id)->first();
+            $user->name = $request->get("name");
+            $user->gmail = $request->get("gmail");
+            $user->address = $request->get("address");
+            $user->password = bcrypt($request->get("password"));
+            $user->Create_time = $time;
+            $user->save();
             $user = User::where("id", "=", $id)->first();
             if ($user) {
                 $token = JWTAuth::fromUser($user);
-                DB::update(
-                    'update users set token = ? where id = ?',
-                    [$token, $id]
-                );
+                $user->token = $token;
+                $user->save();
             } else {
                 return false;
             }
