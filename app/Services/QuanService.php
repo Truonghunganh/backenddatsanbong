@@ -29,9 +29,9 @@ class QuanService
         
         return Quan::where('trangthai',$trangthai)
         ->where(function ($query) use ($search) {
-            $query->where('name', 'LIKE', '%' . strtolower($search) . '%')
-                  ->orWhere('address','LIKE', '%' . strtolower($search) . '%')
-                  ->orWhere('phone','LIKE', '%' . strtolower($search) . '%');
+            $query->where('name', 'ILIKE', '%' . strtolower($search) . '%')
+                  ->orWhere('address','ILIKE', '%' . strtolower($search) . '%')
+                  ->orWhere('phone','ILIKE', '%' . strtolower($search) . '%');
         })->get();
        
     }
@@ -42,9 +42,9 @@ class QuanService
         for ($i=0; $i <count($mang) ; $i++) { 
             $a=$mang[$i];
             $quans->where( function ($query)use ($a) {
-                $query->where('name', 'like', '%' . strtolower( $a) . '%')
-                    ->orwhere('address', 'like', '%' . strtolower($a) . '%')
-                    ->orwhere('phone', 'like', '%' . strtolower($a). '%');
+                $query->where('name', 'ILIKE', '%' . strtolower( $a) . '%')
+                    ->orwhere('address', 'ILIKE', '%' . strtolower($a) . '%')
+                    ->orwhere('phone', 'ILIKE', '%' . strtolower($a). '%');
             });
         };
         return $quans->get();
