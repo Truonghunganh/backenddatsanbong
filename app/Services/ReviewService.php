@@ -36,7 +36,7 @@ class ReviewService
             return true;
         } catch (\Exception $e) {
             DB::rollBack();
-            return $e->getMessage();
+            throw new \Exception($e->getMessage());
         }
 
                 
@@ -64,7 +64,7 @@ class ReviewService
             return true;
         } catch (\Exception $e) {
             DB::rollBack();
-            return $e->getMessage();
+            throw new \Exception($e->getMessage());
         }
 
     }
