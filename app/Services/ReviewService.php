@@ -22,7 +22,7 @@ class ReviewService
                 $review->review=$reviewNew;
                 $review->save();
             } else {
-                $this->addReview($iduser, $idquan, $review);
+                $this->addReview($iduser, $idquan, $reviewNew);
             }
             $reviews = Review::where('idquan', $idquan)->get();
             $tong = 0;
