@@ -38,14 +38,24 @@ class ReviewService
         return Review::where('idquan',$idquan)->get();
     }
     public function addReview($iduser,$idquan,$review){
-        date_default_timezone_set("Asia/Ho_Chi_Minh");
-        $time = date('Y-m-d h:i:s');
-        $date =[
-           "iduser" =>$iduser,
-           "idquan" =>$idquan, 
-           "review" =>$review,
-           "Review_time" =>$time];
-        Review::insert($date);
+        DB::beginTransaction();
+        try {
+            date_default_timezone_set("Asia/Ho_Chi_Minh");
+            $time = date('Y-m-d h:i:s');
+            $date = [
+                    "iduser" => $iduser,
+                    "idquan" => $idquan,
+                    "review" => $review,
+                    "Review_time" => $time
+                ];
+            Review::insert($date);
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return $e->getMessage();
+        }
+
     }
     public function findById($id){
         return Review::find($id);

@@ -4,9 +4,21 @@ namespace App\Services;
 
 use App\Models\Models\User;
 use App\Models\Models\Quan;
+use Illuminate\Support\Facades\DB;
 
 class CheckTokenService
 {
+    public function thu(){
+        DB::beginTransaction();
+        try {
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return $e->getMessage();
+        }
+
+    }
     public function getTokenByPhone($request, $role)
     {
         $user = User::where('role', '=', $role)->where('phone', $request->get('phone'))->first();
