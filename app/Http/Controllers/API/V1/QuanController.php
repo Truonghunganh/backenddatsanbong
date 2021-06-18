@@ -492,7 +492,7 @@ class QuanController extends Controller
                         return response()->json([
                             'status' => true,
                             'code' => Response::HTTP_OK,
-                            'message' => "add quan thành công"
+                            'message' => $quan// "add quan thành công"
                         ]);
                     } else {
                         return response()->json([
