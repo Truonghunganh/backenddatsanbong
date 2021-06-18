@@ -128,7 +128,7 @@ class QuanService
             date_default_timezone_set("Asia/Ho_Chi_Minh");
             $time = date('Y-m-d H:i:s');
             $time= str_replace(' ', '_', $time);
-            return $nameImage = $token->phone . "_" . str_replace(':', '_', $time)  ."_". $request->file('image')->getClientOriginalName();
+            $nameImage = $token->phone . "_" . str_replace(':', '_', $time)  ."_". $request->file('image')->getClientOriginalName();
             $file = $request->file('image');
             $file->move('image\Quan', $nameImage);
             $data =[
