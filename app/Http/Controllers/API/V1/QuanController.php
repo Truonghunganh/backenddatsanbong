@@ -547,7 +547,6 @@ class QuanController extends Controller
                 $getQuanById=$this->quanService->findById($request->get('id'));
                 if ($getQuanById)  {
                     if ($getQuanById->phone==$token->phone) {
-                    
                         $quan = $this->quanService->editQuanByTokenInnkeeper($request, $getQuanById);
                         if ($quan) {
                             return response()->json([

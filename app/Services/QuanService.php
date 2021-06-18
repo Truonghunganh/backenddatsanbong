@@ -130,21 +130,19 @@ class QuanService
             $nameImage = $token->phone . "_" . str_replace(':', '_', $time) . "_" . $request->file('image')->getClientOriginalName();
             $file = $request->file('image');
             $file->move('image\Quan', $nameImage);
-            DB::insert(
-                'insert into quans (name,image,address,phone,linkaddress,trangthai,vido,kinhdo,review,Create_time) values (?,?, ?,?, ?,?,? ,?,?,?)',
-                [
-                    $request->get('name'),
-                    "image/Quan/" . $nameImage,
-                    $request->get('address'),
-                    $token->phone,
-                    $request->get('linkaddress'),
-                    0,
-                    $request->get('vido'),
-                    $request->get('kinhdo'),
-                    0,
-                    $time
-                ]
-            );
+            $data =[
+                "name" =>$request->get('name'),
+                "image"=>"image/Quan/".$nameImage,
+                "address"=>$request->get('address'),
+                "phone"=>$token->phone,
+                "linkaddress"=>$request->get('linkaddress'),
+                "trangthai"=>0,
+                "vido"=>$request->get('vido'),
+                "kinhdo"=>$request->get('kinhdo'),
+                "review"=>0,
+                "Create_time" =>$time
+            ];
+            Quan::insert($data);
             DB::commit();
             return true;
         } catch (\Exception $e) {
