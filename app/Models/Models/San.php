@@ -13,8 +13,8 @@ class San extends Model
         'name',
         'numberpeople',
         'trangthai',
-        'priceperhour'
-           
+        'priceperhour',
+        'Create_time'
     ];
 
     protected $table = "sans";
