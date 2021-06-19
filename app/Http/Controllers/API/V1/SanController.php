@@ -359,7 +359,7 @@ class SanController extends Controller
                 if ($quan) {
                     if ($token->phone == $quan->phone) {
                         $san = $this->sanService->editSanByInnkeeper($request);
-                        if ($san==true) {
+                        if (var_dump($san==true)) {
                             return response()->json([
                                 'status' => true,
                                 'code' => Response::HTTP_OK,
