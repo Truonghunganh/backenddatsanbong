@@ -297,7 +297,7 @@ class DatSanController extends Controller
 
                 date_default_timezone_set("Asia/Ho_Chi_Minh");
                 $time = date('Y-m-d H:i:s');
-                $time = strftime("%Y-%m-%d %H:%i:%s", strtotime(date("Y-m-d H:i:s", strtotime($time)) . "+1 days"));
+                $time = strftime("%Y-%m-%d %H:%M:%S", strtotime(date("Y-m-d H:i:s", strtotime($time)) . "+1 days"));
                 if($time>$datsan->start_time&& $datsan->xacnhan){
                     return response()->json([
                         'status' => false,
