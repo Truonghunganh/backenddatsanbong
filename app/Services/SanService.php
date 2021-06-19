@@ -85,7 +85,6 @@ class SanService
                 return false;    
             }
             $san=San::find($request->get('id'));
-            return $san;
             $san->name=$request->get('name');
             $san->numberpeople=$request->get('numberpeople');
             $san->priceperhour=$request->get('priceperhour');
