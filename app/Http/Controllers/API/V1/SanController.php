@@ -272,7 +272,7 @@ class SanController extends Controller
                 if ($quan) {
                     if($token->phone==$quan->phone){
                         $san=$this->sanService->addSanByInnkeeper($request);
-                        if ($san) {
+                        if ($san==true) {
                             return response()->json([
                                 'status' => true,
                                 'code' => Response::HTTP_OK,
@@ -284,7 +284,7 @@ class SanController extends Controller
                             return response()->json([
                                 'status' => false,
                                 'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
-                                'message' => "add sân thất bại"
+                                'message' => $san
                             ]);                            
                         }
                         
@@ -348,20 +348,18 @@ class SanController extends Controller
             $token = $this->checkTokenService->checkTokenInnkeeper($request);
             if ($token) {
                 $san=$this->sanService->findById($request->get('id'));
-              
                 if (!$san) {
                     return response()->json([
                         'status' => false,
                         'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
                         'message' => "không tìm thấy sân có id = " . $request->get('id')
-                    ]);
-                    
+                    ]);                    
                 }
                 $quan = $this->quanService->findById($san->idquan);
                 if ($quan) {
                     if ($token->phone == $quan->phone) {
                         $san = $this->sanService->editSanByInnkeeper($request);
-                        if ($san) {
+                        if ($san==true) {
                             return response()->json([
                                 'status' => true,
                                 'code' => Response::HTTP_OK,
@@ -372,7 +370,7 @@ class SanController extends Controller
                             return response()->json([
                                 'status' => false,
                                 'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
-                                'message' => "add sân thất bại"
+                                'message' => $san
                             ]);
                         }
                     } else {
