@@ -130,7 +130,8 @@ class QuanService
             $time= str_replace(' ', '_', $time);
             $nameImage = $token->phone . "_" . str_replace(':', '_', $time)  ."_". $request->file('image')->getClientOriginalName();
             $file = $request->file('image');
-            $file->move('image\Quan', $nameImage);
+            $file->move('image/Quan', $nameImage);
+            return 'image/Quan'. $nameImage;
             $data =[
                 "name" =>$request->get('name'),
                 "image"=>"image/Quan/".$nameImage,
