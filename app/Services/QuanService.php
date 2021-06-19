@@ -131,7 +131,6 @@ class QuanService
             $nameImage = $token->phone . "_" . str_replace(':', '_', $time)  ."_". $request->file('image')->getClientOriginalName();
             $file = $request->file('image');
             $file->move('image/Quan', $nameImage);
-            return 'image/Quan'. $nameImage;
             $data =[
                 "name" =>$request->get('name'),
                 "image"=>"image/Quan/".$nameImage,
@@ -165,10 +164,11 @@ class QuanService
                     File::delete($getQuanById->image); // xóa hình củ đi
                 } catch (\Throwable $th) {
                 }
+                $time = str_replace(' ', '_', $time);
                 $nameImage = $getQuanById->phone . "_" . str_replace(':', '_', $time) . "_" . $request->file('image')->getClientOriginalName();
              
                 $file = $request->file('image');
-                $file->move('image\Quan', $nameImage); // thêm hình mới 
+                $file->move('image/Quan', $nameImage); // thêm hình mới 
                  
                 $update=Quan::find($request->get('id'));
                 $update->name=$request->get('name');
