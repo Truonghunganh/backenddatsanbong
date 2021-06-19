@@ -420,15 +420,15 @@ class QuanController extends Controller
             }
             $token = $this->checkTokenService->checkTokenInnkeeper($request);
             if($token)  {
-                $quan= $this->quanService->findQuanChuaduyetById($request->get('idquan'));
-                if (count($quan)==0) {
+                $quan= $this->quanService->findByIdVaTrangThai($request->get('idquan'),Quan::INACTIVE_QUAN);
+                if (!$quan) {
                     return response()->json([
                         'status' => false,
                         'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
                         'message' => "không có idquan hoặc idquan này bạn không quyền  xóa"
                     ]);
                 }
-                if($token->phone==$quan[0]->phone){
+                if($token->phone==$quan->phone){
                     if ($this->quanService->deleteQuanById($request->get("idquan"))) {
                         return response()->json([
                             'status' => true,

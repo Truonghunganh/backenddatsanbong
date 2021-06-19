@@ -216,11 +216,17 @@ class QuanService
         DB::beginTransaction();
         try {
             $quan = Quan::find($idquan);
-            if (File::delete($quan->image)) {
+            if ($quan) {
+                try {
+                    File::delete($quan->image);
+                } catch (\Exception $e1) {
+                }
                 Quan::find($idquan)->delete();
+                DB::commit();
+                return true;
             }
             DB::commit();
-            return true;
+            return false;
         } catch (\Exception $e) {
             DB::rollBack();
             throw new \Exception($e->getMessage());
