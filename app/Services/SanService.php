@@ -85,12 +85,15 @@ class SanService
             }
             date_default_timezone_set("Asia/Ho_Chi_Minh");
             $time = date('Y-m-d H:i:s');
-            $san=San::find($request->get('id'));
-            $san->name=$request->get('name');
-            $san->numberpeople=$request->get('numberpeople');
-            $san->priceperhour=$request->get('priceperhour');
-            $san->Create_time=$time;
-            $san->save();
+            DB::update(
+                'update sans set name = ?,numberpeople=?,priceperhour=? where id = ?', 
+            [$request->get('name'), $request->get('numberpeople'), $request->get('priceperhour') , $request->get('id')]);
+            // $san=San::find($request->get('id'));
+            // $san->name=$request->get('name');
+            // $san->numberpeople=$request->get('numberpeople');
+            // $san->priceperhour=$request->get('priceperhour');
+            // $san->Create_time=$time;
+            // $san->save();
             DB::commit();
             return true;
         } catch (\Exception $e) {
