@@ -66,7 +66,6 @@ class SanService
         try {
             DB::beginTransaction();
             DB::update('update sans set trangthai = ? where id = ?', [!$trangthai,$idsan]);
-            
             DB::commit();
             return true;
             //code...
@@ -84,11 +83,13 @@ class SanService
                 DB::commit();
                 return false;    
             }
+            date_default_timezone_set("Asia/Ho_Chi_Minh");
+            $time = date('Y-m-d H:i:s');
             $san=San::find($request->get('id'));
-            return $request->get('name'). $request->get('numberpeople'). $request->get('priceperhour');
             $san->name=$request->get('name');
             $san->numberpeople=$request->get('numberpeople');
             $san->priceperhour=$request->get('priceperhour');
+            $san->Create_time=$time;
             $san->save();
             DB::commit();
             return true;
