@@ -83,8 +83,6 @@ class SanService
                 DB::commit();
                 return false;    
             }
-            date_default_timezone_set("Asia/Ho_Chi_Minh");
-            $time = date('Y-m-d H:i:s');
             DB::update(
                 'update sans set name = ?,numberpeople=?,priceperhour=? where id = ?', 
             [$request->get('name'), $request->get('numberpeople'), $request->get('priceperhour') , $request->get('id')]);
