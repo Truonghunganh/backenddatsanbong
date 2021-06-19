@@ -44,20 +44,23 @@ class SanService
     public function addSanByInnkeeper($request){
         date_default_timezone_set("Asia/Ho_Chi_Minh");
         $time = date('Y-m-d H:i:s');
-         
-        return DB::insert(
-            'insert into sans (idquan,name,numberpeople,trangthai,priceperhour,Create_time) values (?,?, ?,?, ?,?)',
-            [
-                $request->get('idquan'),
-                $request->get('name'),
-                $request->get('numberpeople'),
-                0,
-                $request->get('priceperhour'),
-                $time
-
-            ]
-        );
-        
+        DB::beginTransaction();
+        try {
+            $data=[
+                "idquan"=>$request->get('idquan'),
+                "name"=>$request->get('name'),
+                "numberpeople"=>$request->get('numberpeople'),
+                "trangthai"=>0,
+                "priceperhour" =>$request->get('priceperhour'),
+                "Create_time"=>$time           
+            ];
+            San::insert($data);
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return $e->getMessage();
+        }        
     }
     public function thayDoiTrangthaiSanByInnkeeper($idsan,$trangthai){
         try {
@@ -75,15 +78,23 @@ class SanService
     }
     public function editSanByInnkeeper($request)
     {
-        return DB::update(
-            'update sans set name = ?, numberpeople = ?, priceperhour =? where id=?',
-            [
-                $request->get('name'),
-                $request->get('numberpeople'),
-                $request->get('priceperhour'),
-                $request->get('id'),
-            ]
-        );
+        DB::beginTransaction();
+        try {
+            if(!$request->get('id')){
+                DB::commit();
+                return false;    
+            }
+            $san=San::find($request->get("id"));
+            $san->name=$request->get('name');
+            $san->numberpeople=$request->get('numberpeople');
+            $san->priceperhour=$request->get('priceperhour');
+            $san->save();
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return $e->getMessage();
+        }
     }
     
 }
