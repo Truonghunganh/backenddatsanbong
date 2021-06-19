@@ -84,7 +84,7 @@ class SanService
                 DB::commit();
                 return false;    
             }
-            $san=San::find($request->get("id"));
+            $san=San::find($request->get('id'));
             $san->name=$request->get('name');
             $san->numberpeople=$request->get('numberpeople');
             $san->priceperhour=$request->get('priceperhour');

@@ -358,7 +358,6 @@ class SanController extends Controller
                 $quan = $this->quanService->findById($san->idquan);
                 if ($quan) {
                     if ($token->phone == $quan->phone) {
-                        return $token->phone;
                         $san = $this->sanService->editSanByInnkeeper($request);
                         return $san;
                         if (var_dump($san==true)) {
