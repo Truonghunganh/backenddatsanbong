@@ -72,7 +72,8 @@ Route::prefix('v1')->group(function () {
 
     //Route::get('get', 'App\Http\Controllers\Api\V1\CheckTokenController@checkTokenInnkeeper');getAllCommentCuaMotQuanByInnkeeper
      
-    Route::get('thu', 'App\Http\Controllers\API\V1\CheckTokenController@thu');
+    Route::post('thu', 'App\Http\Controllers\API\V1\CheckTokenController@thu');
+    Route::post('thu1', 'App\Http\Controllers\API\V1\CheckTokenController@thu1');
     
     // admin : quản lý các quán getDatSansvaSansByInnkeeperAndIdquanAndNgay,Route::post('getDoanhThuByInnkeeper', 'App\Http\Controllers\Api\V1\DoanhThuController@getDoanhThuByInnkeeper');
     

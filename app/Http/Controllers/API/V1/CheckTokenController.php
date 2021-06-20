@@ -40,8 +40,23 @@ class CheckTokenController extends Controller
         self::$b++;
         return self::$b;
     }
+    public  function  thu1(Request $request){
+        $role=$request->get('role');
+        if ($role!="user") {
+            return 1;
+        }
+        else {
+            return 2;
+        }
+    }
     public  function  thu(Request $request)
     {
+        $role = $request->get('role');
+        if (var_dump($role != "user")) {
+            return 3;
+        } else {
+            return 4;
+        }
         //return "hùng anh đẹp trai";
         $c=$this->settings->get("checkdatsan")+1;
         $this->settings->put('checkdatsan', $c);
