@@ -126,7 +126,7 @@ class UserController extends Controller
             }
             //var_dump()
             $role=$request->get('role');
-            if (var_dump($role!="user")|| var_dump($role!="innkeeper")) {
+            if ($role!="user"|| $role!="innkeeper") {
                 return response()->json([
                     'status' => false,
                     'role'=>$role,
