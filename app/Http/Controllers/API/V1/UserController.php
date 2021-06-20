@@ -126,7 +126,7 @@ class UserController extends Controller
             }
             //var_dump()
             $role=$request->get('role');
-            if ($role!="user"|| $role!="innkeeper") {
+            if (var_dump($role!="user")|| var_dump($role!="innkeeper")) {
                 return response()->json([
                     'status' => false,
                     'role'=>$role,
@@ -135,7 +135,7 @@ class UserController extends Controller
                 ]);
             }
             $user=$this->userService->getUserByPhone($request->get('phone'));
-            if (!$user) {
+            if ($user) {
                 return response()->json([
                     'status' => false,
                     'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
@@ -147,7 +147,7 @@ class UserController extends Controller
                 return response()->json([
                     'status' => false,
                     'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
-                    'message' => "số điên thoại đã tôn tại không thể đăng ký được"
+                    'message' => "Đăng ký thất bại"
                 ]);    
             }
             return response()->json([
