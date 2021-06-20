@@ -124,6 +124,7 @@ class UserController extends Controller
                     'message' =>"thông tin chưa đúng"
                 ]);
             }
+            
             //var_dump()
             $role=$request->get('role');
             if ($role=="innkeeper"||$role=="user") {
