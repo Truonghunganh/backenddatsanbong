@@ -120,28 +120,23 @@ class UserService
         try {
             date_default_timezone_set("Asia/Ho_Chi_Minh");
             $time = date('Y-m-d H:i:s');
-            DB::insert(
-                'insert into users (role,name,phone,gmail,address,password,Create_time) values (?,?, ?,?, ?,?,?)',
-                [
-                    $request->get('role'),
-                    $request->get('name'),
-                    $request->get('phone'),
-                    $request->get('gmail'),
-                    $request->get('address'),
-                    bcrypt($request->get('password')),
-                    $time
-
-                ]
-            );
-            $user = User::where("phone", "=", $request->get('phone'))->first();
+            $data = [
+                "name" => $request->get('name'),
+                "role" => $request->get('role'),
+                "phone" => $request->get('phone'),
+                "gmail" => $request->get('gmail'),
+                "address" => $request->get('address'),
+                "password" => bcrypt($request->get('phone')),
+                "Create_time" => $time
+            ];
+            User::insert($data);
+            $user = User::where("phone", "=", $request->get('phone'))->First();
             if ($user) {
                 $token = JWTAuth::fromUser($user);
-                DB::update(
-                    'update users set token = ? where phone = ?',
-                    [$token, $request->get('phone')]
-                );
+                DB::update('update users set token = ? where phone = ?', [$token, $request->get('phone')]);
+            }else {
+                return true;
             }
-            
             DB::commit();
             return false;
         } catch (\Exception $e) {
