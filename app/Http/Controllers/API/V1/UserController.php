@@ -134,6 +134,14 @@ class UserController extends Controller
                     'message' => "không đúng vai trò"
                 ]);
             }
+            if ($role != "user") {
+                return response()->json([
+                    'status' => false,
+                    'role' => $role,
+                    'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                    'message' => "không đúng vai trò"
+                ]);
+            }
             $user=$this->userService->getUserByPhone($request->get('phone'));
             if ($user) {
                 return response()->json([
