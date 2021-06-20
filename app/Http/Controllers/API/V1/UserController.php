@@ -126,42 +126,35 @@ class UserController extends Controller
             }
             //var_dump()
             $role=$request->get('role');
-            if ($role!="innkeeper") {
+            if ($role=="innkeeper"||$role=="user") {
+                $user = $this->userService->getUserByPhone($request->get('phone'));
+                if ($user) {
+                    return response()->json([
+                        'status' => false,
+                        'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                        'message' => "số điên thoại đã tôn tại không thể đăng ký được"
+                    ]);
+                }
+                $user = $this->userService->register($request);
+                if ($user) {
+                    return response()->json([
+                        'status' => false,
+                        'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                        'message' => "Đăng ký thất bại"
+                    ]);
+                }
                 return response()->json([
-                    'status' => false,
-                    'role'=>$role,
-                    'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
-                    'message' => "không đúng vai trò"
+                    'status' => true,
+                    'code' => Response::HTTP_OK,
+                    'message' => "bạn đã đăng kí thành công "
                 ]);
-            }
-            if ($role != "user") {
-                return response()->json([
-                    'status' => false,
-                    'role' => $role,
-                    'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
-                    'message' => "không đúng vai trò"
-                ]);
-            }
-            $user=$this->userService->getUserByPhone($request->get('phone'));
-            if ($user) {
-                return response()->json([
-                    'status' => false,
-                    'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
-                    'message' => "số điên thoại đã tôn tại không thể đăng ký được"
-                ]);
-            }
-            $user= $this->userService->register($request);
-            if ($user) {
-                return response()->json([
-                    'status' => false,
-                    'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
-                    'message' => "Đăng ký thất bại"
-                ]);    
+                
             }
             return response()->json([
-                'status' => true,
-                'code' => Response::HTTP_OK,
-                'message' => "bạn đã đăng kí thành công "
+                'status' => false,
+                'role' => $role,
+                'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                'message' => "không đúng vai trò"
             ]);
         } catch (\Exception $e) {
             return response()->json([
