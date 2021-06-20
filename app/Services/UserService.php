@@ -118,10 +118,6 @@ class UserService
     {
         DB::beginTransaction();
         try {
-            $userCheckPhone = User::where('phone', '=', $request->get('phone'))->first();
-            if ($userCheckPhone) {
-                return true;
-            }
             date_default_timezone_set("Asia/Ho_Chi_Minh");
             $time = date('Y-m-d H:i:s');
             DB::insert(
@@ -150,7 +146,6 @@ class UserService
             return false;
         } catch (\Exception $e) {
             DB::rollBack();
-            return true;
             throw new \Exception($e->getMessage());
         }
     }
@@ -186,9 +181,9 @@ class UserService
     //     return false;
       
     // }
-    public  function getUser($request)
+    public  function getUserByPhone($phone)
     {
-        return User::where("phone", "=", $request->get('phone'))->first();
+        return User::where("phone", "=", $phone)->first();
     }
 
     
