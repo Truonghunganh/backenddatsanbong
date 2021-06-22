@@ -430,9 +430,9 @@ class DatSanService
         $ngay = substr($time,8, 2);
         $datsansnew=[];
         if ($dau == "=") {
-            $datsans = DatSan::where('xacnhan', $xacnhan)->whereYear("start_time", $dau, $nam)->whereMonth("start_time", $dau, $thang)->whereDay("start_time", $dau, $ngay)->get();
+            $datsans = DatSan::where('xacnhan', $xacnhan)->whereYear("start_time", $dau, $nam)->whereMonth("start_time", $dau, $thang)->whereDay("start_time", $dau, $ngay);
         } else {
-            $datsans = DatSan::where('xacnhan', $xacnhan)->where("start_time", $dau, $time)->get();
+            $datsans = DatSan::where('xacnhan', $xacnhan)->where("start_time", $dau, $time);
         }
             
         for ($i=0; $i < count($sans); $i++) {
