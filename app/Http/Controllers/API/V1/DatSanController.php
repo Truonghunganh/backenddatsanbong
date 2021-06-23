@@ -788,7 +788,7 @@ class DatSanController extends Controller
                     'code' => Response::HTTP_OK,
                      'datsans' => $datsans,
                  //   'tongpage' => $datsans->lastPage(),
-                    'quan' => $quan
+                    //'quan' => $quan
                 ]);
             } else {
                 return response()->json([

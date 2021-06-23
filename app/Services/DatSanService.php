@@ -456,7 +456,7 @@ class DatSanService
                 if ($datsan->idsan==$san->id) {
                     $ds = new Datsan2($datsan->id, $san, $user, $datsan->start_time, $datsan->price, $datsan->xacnhan);
                     array_push($datsansnew, $ds);
-                    break;        
+                           
                 }
             }
         }
