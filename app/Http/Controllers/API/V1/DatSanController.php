@@ -75,7 +75,7 @@ class DatSanController extends Controller
                     $this->settings->put('checkdatsan', false);
                     $datsan = $this->datSanService->addDatSan($request, $tonkenUser->id);
                     $this->settings->put('checkdatsan', true);
-                    if ($datsan) {
+                    if ($datsan==0) {
                         return response()->json([
                             'status'  => true,
                             'code'    => Response::HTTP_OK,
@@ -85,8 +85,7 @@ class DatSanController extends Controller
                         return response()->json([
                             'status' => false,
                             'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
-                            'message' => "bạn đã đặt sân thất bại ;",
-                            'datsan' => $datsan
+                            'message' => $datsan
                         ]);
                     }
                 } else {

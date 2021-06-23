@@ -100,7 +100,7 @@ Route::prefix('v1')->group(function () {
     Route::get('checkToken', 'App\Http\Controllers\API\V1\CheckTokenController@checkToken');
     Route::post('register', 'App\Http\Controllers\API\V1\UserController@register');
 
-//    Route::post('getAllDatSanByInnkeeperAndIdquan1', 'App\Http\Controllers\API\V1\DatSanController@getAllDatSanByInnkeeperAndIdquan1');
+   Route::post('getAllDatSanByInnkeeperAndIdquan1', 'App\Http\Controllers\API\V1\DatSanController@getAllDatSanByInnkeeperAndIdquan1');
     
 
 });

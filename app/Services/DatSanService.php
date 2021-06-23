@@ -308,7 +308,7 @@ class DatSanService
     public function  addDatSan($request,$iduser){
         $datsan = DatSan::where('idsan', $request->get('idsan'))->where('start_time', $request->get('start_time'))->first();
         if ($datsan) {
-            return  3;
+            return  "Giờ này đã có người đặt rồi";
         }
         DB::beginTransaction();
         try {
@@ -327,7 +327,7 @@ class DatSanService
             Datsan::insert($data);
            
             DB::commit();
-            return true;
+            return 0;
         } catch (\Exception $e) {
             DB::rollBack();
             return $e->getMessage();
@@ -427,15 +427,15 @@ class DatSanService
         $nam= substr($time, 0, 4);
         $thang= substr($time,5, 2);
         $ngay = substr($time,8, 2);
-        $datsansnew=[];
+        $datsans="";
         if ($dau == "=") {
-            $datsans = DatSan::where('xacnhan', $xacnhan)->whereYear("start_time", $dau, $nam)->whereMonth("start_time", $dau, $thang)->whereDay("start_time", $dau, $ngay);
+            $datsans = DatSan::where('xacnhan', $xacnhan)->whereYear("start_time", $dau, $nam)->whereMonth("start_time", $dau, $thang)->whereDay("start_time", $dau, $ngay)->paginate($soluong);
         } else {
-            $datsans = DatSan::where('xacnhan', $xacnhan)->where("start_time", $dau, $time);
+            $datsans = DatSan::where('xacnhan', $xacnhan)->where("start_time", $dau, $time)->paginate($soluong);
         }
             
         for ($i=0; $i < count($sans); $i++) {
-            $datsans= $datsans->orWhere("idsan",$sans[$i]->id)->paginate($soluong);
+            $datsans= $datsans->orWhere("idsan",$sans[$i]->id);
         }
         $datsans=$datsans->sortByDesc("start_time");
 
