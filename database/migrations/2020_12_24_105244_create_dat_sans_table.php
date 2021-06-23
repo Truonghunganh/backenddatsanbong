@@ -9,7 +9,7 @@ class CreateDatSansTable extends Migration
     public function up()
     {
         Schema::create('datsans', function (Blueprint $table) {
-            $table->bigIncrements('id')->unsigned();
+            $table->bigIncrements('id');
             $table->bigInteger('idsan')->unsigned();
             $table->foreign('idsan')->references('id')->on('sans')->onUpdate('cascade')->onDelete('cascade');
             $table->bigInteger('iduser')->unsigned();

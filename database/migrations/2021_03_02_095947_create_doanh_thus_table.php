@@ -9,7 +9,7 @@ class CreateDoanhThusTable extends Migration
     public function up()
     {
         Schema::create('doanhthus', function (Blueprint $table) {
-            $table->bigIncrements('id')->unsigned();
+            $table->bigIncrements('id');
             $table->bigInteger('idquan')->unsigned();
             $table->bigInteger('doanhthu');
             $table->dateTime('time');

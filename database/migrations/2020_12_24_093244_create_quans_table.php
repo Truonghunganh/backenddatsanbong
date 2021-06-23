@@ -9,7 +9,7 @@ class CreateQuansTable extends Migration
     public function up()
     {
         Schema::create('quans', function (Blueprint $table) {
-            $table->bigIncrements('id')->unsigned();
+            $table->bigIncrements('id');
             $table->string('name');
             $table->string('image');
             $table->string('address');

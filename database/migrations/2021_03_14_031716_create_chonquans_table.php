@@ -14,7 +14,7 @@ class CreateChonquansTable extends Migration
     public function up()
     {
         Schema::create('chonquans', function (Blueprint $table) {
-            $table->bigIncrements('id')->unsigned();
+            $table->bigIncrements('id');
             $table->bigInteger('iduser')->unsigned();
             $table->bigInteger('idquan')->unsigned();
             $table->integer('solan');
