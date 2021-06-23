@@ -18,7 +18,7 @@ class CreateCommentsTable extends Migration
             $table->bigInteger('idreview')->unsigned();
             $table->longText('binhluan');
             $table->dateTime('Create_time');
-           $table->foreign('idreview')->references('id')->on('reviews');
+            $table->foreign('idreview')->references('id')->on('reviews');
             $table->timestamps();
            
         });
