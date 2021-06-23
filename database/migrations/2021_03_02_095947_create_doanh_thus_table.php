@@ -13,7 +13,6 @@ class CreateDoanhThusTable extends Migration
             $table->bigInteger('idquan')->unsigned();
             $table->bigInteger('doanhthu');
             $table->dateTime('time');
-            $table->timestamps();
             $table->foreign('idquan')->references('id')->on('quans');
             $table->timestamps();
           
