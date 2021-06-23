@@ -461,6 +461,7 @@ class DatSanService
             }
         }
         return [
+            "a"=>count($datsans),
             "datsans"=>$datsansnew,
             "tongpage"=> $tongpage
         ];
