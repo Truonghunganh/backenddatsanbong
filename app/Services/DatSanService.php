@@ -438,14 +438,14 @@ class DatSanService
                         ->whereYear("start_time", $dau, $nam)
                         ->whereMonth("start_time", $dau, $thang)
                         ->whereDay("start_time", $dau, $ngay)
-                        ->orWhere("idsan", $a) 
-                        ->sortByDesc("start_time")
+                        ->orWhere("idsan", $a)
+                        ->orderBy('start_time', 'desc')
                         ->paginate($soluong);
         } else {
             $datsans = DatSan::where('xacnhan', $xacnhan)
                         ->where("start_time", $dau, $time)
                         ->orWhere("idsan", $a)
-                        ->sortByDesc("start_time")
+                        ->orderBy('start_time', 'desc')
                         ->paginate($soluong);
         }
 
