@@ -322,7 +322,6 @@ class DatSanService
                 "price"=>$request->get('price'),
                 "xacnhan" =>false,
                 "Create_time"=> $time
-
             ];
             
             Datsan::insert($data);
