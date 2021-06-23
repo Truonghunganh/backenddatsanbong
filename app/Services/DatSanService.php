@@ -423,22 +423,33 @@ class DatSanService
     public function getAllDatSanByIdquan1($idquan,$xacnhan,$time,$dau,$soluong){
         
         $sans=$this->sanService->getSansByIdquan($idquan);
-        return $sans;
         $nam= substr($time, 0, 4);
         $thang= substr($time,5, 2);
         $ngay = substr($time,8, 2);
-        $datsans="";
-        if ($dau == "=") {
-            $datsans = DatSan::where('xacnhan', $xacnhan)->whereYear("start_time", $dau, $nam)->whereMonth("start_time", $dau, $thang)->whereDay("start_time", $dau, $ngay)->paginate($soluong);
-        } else {
-            $datsans = DatSan::where('xacnhan', $xacnhan)->where("start_time", $dau, $time)->paginate($soluong);
-        }
-            
+        $datsans=[];
+        $a=[];
+        $datsansnew=[];
         for ($i=0; $i < count($sans); $i++) {
-            $datsans= $datsans->orWhere("idsan",$sans[$i]->id);
+            array_push($a, $sans[$i]->id);
+            
         }
-        $datsans=$datsans->sortByDesc("start_time");
+        if ($dau == "=") {
+            $datsans = DatSan::where('xacnhan', $xacnhan)
+                        ->whereYear("start_time", $dau, $nam)
+                        ->whereMonth("start_time", $dau, $thang)
+                        ->whereDay("start_time", $dau, $ngay)
+                        ->orWhere("idsan", $a) 
+                        ->sortByDesc("start_time")
+                        ->paginate($soluong);
+        } else {
+            $datsans = DatSan::where('xacnhan', $xacnhan)
+                        ->where("start_time", $dau, $time)
+                        ->orWhere("idsan", $a)
+                        ->sortByDesc("start_time")
+                        ->paginate($soluong);
+        }
 
+        return $datsans= $datsans->items();
         foreach ($sans as $san) {
             foreach ($datsans as $datsan) {
                 $user=$this->userService->getUserById($datsan->iduser);
