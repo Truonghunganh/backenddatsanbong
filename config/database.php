@@ -66,25 +66,33 @@ return [
 
         'pgsql' => [
             'driver' => 'pgsql',
-            'url' => env('DATABASE_URL', 'postgres://tsbgihqbdjsulu:987d540ba43c555b023a710294b2ec657b98106d0f286f4b82b8f0da317717b3@ec2-54-90-211-192.compute-1.amazonaws.com:5432/d9oershm9suo1i'),
+            'url' => env('DATABASE_URL', 'postgres://pioytrfsymkrsg:267325d23e7c2318542b8328269d617ece2bec394b9ee286071bf0f9472dc2b5@ec2-23-20-124-77.compute-1.amazonaws.com:5432/d5gl68ahac9175'),
             'host' => env('DB_HOST', 'ec2-54-90-211-192.compute-1.amazonaws.com'),
             'port' => env('DB_PORT', '5432'),
             'database' => env('DB_DATABASE', 'd9oershm9suo1i'),
             'username' => env('DB_USERNAME', 'tsbgihqbdjsulu'),
             'password' => env('DB_PASSWORD', '987d540ba43c555b023a710294b2ec657b98106d0f286f4b82b8f0da317717b3'),
-            //'charset' => 'utf8',
             'charset' => 'utf8',
-           // 'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
-             'prefix_indexes' => true,
+            'prefix_indexes' => true,
             'schema' => 'public',
             'sslmode' => 'prefer',
 
+            
+      
+            //     //'charset' => 'utf8',
+        //     'charset' => 'utf8',
+        //    // 'collation' => 'utf8mb4_unicode_ci',
+        //     'prefix' => '',
+        //      'prefix_indexes' => true,
+        //     'schema' => 'public',
+        //     'sslmode' => 'prefer',
 
-            //'prefix' => '',
-            'prefix_indexes' => true,
-            'strict' => true,
-            'engine' => null,
+
+        //     //'prefix' => '',
+        //     'prefix_indexes' => true,
+        //     'strict' => true,
+        //     'engine' => null,
             // 'options' => extension_loaded('pdo_mysql') ? array_filter([
             //     PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             // ]) : [],
