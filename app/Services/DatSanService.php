@@ -402,6 +402,7 @@ class DatSanService
         $thang = substr($time, 5, 2);
         $ngay = substr($time, 8, 2);
         $datsansnew = [];
+        $datsans=[];
         foreach ($sans as $san) {
             if ($dau == "=") {
                 $datsans = DatSan::where('idsan', $san->id)->where('xacnhan', $xacnhan)->whereYear("start_time", $dau, $nam)->whereMonth("start_time", $dau, $thang)->whereDay("start_time", $dau, $ngay)->get();
