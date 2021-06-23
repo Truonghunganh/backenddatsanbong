@@ -74,20 +74,20 @@ return [
             'password' => env('DB_PASSWORD', '987d540ba43c555b023a710294b2ec657b98106d0f286f4b82b8f0da317717b3'),
             //'charset' => 'utf8',
             'charset' => 'utf8',
-            'collation' => 'utf8mb4_unicode_ci',
-            // 'prefix' => '',
-            // 'prefix_indexes' => true,
+           // 'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+             'prefix_indexes' => true,
             'schema' => 'public',
             'sslmode' => 'prefer',
 
 
-            'prefix' => '',
+            //'prefix' => '',
             'prefix_indexes' => true,
             'strict' => true,
             'engine' => null,
-            'options' => extension_loaded('pdo_mysql') ? array_filter([
-                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
-            ]) : [],
+            // 'options' => extension_loaded('pdo_mysql') ? array_filter([
+            //     PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            // ]) : [],
         ],
 
         'sqlsrv' => [
