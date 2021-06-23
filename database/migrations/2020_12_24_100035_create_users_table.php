@@ -9,7 +9,7 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id')->unsigned();
             $table->string('role');
             $table->string('name');
             $table->string('phone')->index();
@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->longText('token')->nullable()->index();
             $table->dateTime('Create_time');
+            $table->timestamps();
         });
     }
 

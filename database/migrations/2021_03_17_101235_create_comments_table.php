@@ -14,11 +14,12 @@ class CreateCommentsTable extends Migration
     public function up()
     {
         Schema::create('comments', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('idreview')->unsigned();
+            $table->bigIncrements('id')->unsigned();
+            $table->bigInteger('idreview')->unsigned();
             $table->longText('binhluan');
             $table->dateTime('Create_time');
            $table->foreign('idreview')->references('id')->on('reviews');
+            $table->timestamps();
            
         });
     }

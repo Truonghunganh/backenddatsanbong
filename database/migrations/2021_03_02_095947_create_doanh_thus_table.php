@@ -9,12 +9,13 @@ class CreateDoanhThusTable extends Migration
     public function up()
     {
         Schema::create('doanhthus', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('idquan')->unsigned();
+            $table->bigIncrements('id')->unsigned();
+            $table->bigInteger('idquan')->unsigned();
             $table->bigInteger('doanhthu');
             $table->dateTime('time');
             $table->timestamps();
             $table->foreign('idquan')->references('id')->on('quans');
+            $table->timestamps();
           
         });
     }

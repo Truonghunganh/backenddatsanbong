@@ -9,7 +9,7 @@ class CreateQuansTable extends Migration
     public function up()
     {
         Schema::create('quans', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id')->unsigned();
             $table->string('name');
             $table->string('image');
             $table->string('address');
@@ -20,6 +20,8 @@ class CreateQuansTable extends Migration
             $table->boolean('trangthai');
             $table->dateTime('Create_time');
             $table->double('review');
+            $table->timestamps();
+            
             
         });
      }

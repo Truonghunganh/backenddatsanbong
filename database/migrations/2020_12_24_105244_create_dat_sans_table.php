@@ -9,15 +9,17 @@ class CreateDatSansTable extends Migration
     public function up()
     {
         Schema::create('datsans', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('idsan')->unsigned();
+            $table->bigIncrements('id')->unsigned();
+            $table->bigInteger('idsan')->unsigned();
             $table->foreign('idsan')->references('id')->on('sans')->onUpdate('cascade')->onDelete('cascade');
-            $table->integer('iduser')->unsigned();
+            $table->bigInteger('iduser')->unsigned();
             $table->foreign('iduser')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->dateTime('start_time');
             $table->bigInteger('price');
             $table->boolean('xacnhan');
             $table->dateTime('Create_time');
+            $table->timestamps();
+            
            
         });
         // Schema::create('datsans', function (Blueprint $table) {

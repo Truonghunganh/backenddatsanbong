@@ -14,12 +14,13 @@ class CreateChonquansTable extends Migration
     public function up()
     {
         Schema::create('chonquans', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('iduser')->unsigned();
-            $table->integer('idquan')->unsigned();
+            $table->bigIncrements('id')->unsigned();
+            $table->bigInteger('iduser')->unsigned();
+            $table->bigInteger('idquan')->unsigned();
             $table->integer('solan');
             $table->foreign('iduser')->references('id')->on('users');
             $table->foreign('idquan')->references('id')->on('quans');
+            $table->timestamps();
           
         });
     }
