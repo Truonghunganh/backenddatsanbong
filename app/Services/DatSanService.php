@@ -308,7 +308,7 @@ class DatSanService
     public function  addDatSan($request,$iduser){
         $datsan = DatSan::where('idsan', $request->get('idsan'))->where('start_time', $request->get('start_time'))->first();
         if ($datsan) {
-            return  false;
+            return  3;
         }
         DB::beginTransaction();
         try {
@@ -330,7 +330,7 @@ class DatSanService
             return true;
         } catch (\Exception $e) {
             DB::rollBack();
-            return false;
+            return $e->getMessage();
         }
         return false;
     }
