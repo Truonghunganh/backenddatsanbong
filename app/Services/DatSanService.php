@@ -448,17 +448,22 @@ class DatSanService
                         ->orderBy('start_time', 'desc')
                         ->paginate($soluong);
         }
-
-        return $datsans= $datsans->items();
-        foreach ($sans as $san) {
-            foreach ($datsans as $datsan) {
-                $user=$this->userService->getUserById($datsan->iduser);
-                $ds=new Datsan2($datsan->id,$san,$user,$datsan->start_time,$datsan->price,$datsan->xacnhan);
-                array_push($datsansnew,$ds);
+        $tongpage= $datsans->lastPage();
+        $datsans= $datsans->items();
+        foreach ($datsans as $datsan) {
+            $user = $this->userService->getUserById($datsan->iduser);
+            foreach ($sans as $san) {
+                if ($datsan->idsan==$san->id) {
+                    $ds = new Datsan2($datsan->id, $san, $user, $datsan->start_time, $datsan->price, $datsan->xacnhan);
+                    array_push($datsansnew, $ds);
+                    break;        
+                }
             }
-
         }
-        return $datsans;
+        return [
+            "datsans"=>$datsansnew,
+            "tongpage"=> $tongpage
+        ];
     }
     public function getListDatSanByInnkeeper($innkeeper,$start_time){
         $quans=$this->quanService->getQuanByPhoneDaduocduyet( $innkeeper->phone);
