@@ -423,7 +423,7 @@ class DatSanService
     public function getAllDatSanByIdquan1($idquan,$xacnhan,$time,$dau,$soluong){
         
         $sans=$this->sanService->getSansByIdquan($idquan);
-        
+        return $sans;
         $nam= substr($time, 0, 4);
         $thang= substr($time,5, 2);
         $ngay = substr($time,8, 2);
