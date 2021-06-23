@@ -421,14 +421,12 @@ class DatSanService
     }
     
     public function getAllDatSanByIdquan1($idquan,$xacnhan,$time,$dau,$soluong){
-        
         $sans=$this->sanService->getSansByIdquan($idquan);
         $nam= substr($time, 0, 4);
         $thang= substr($time,5, 2);
         $ngay = substr($time,8, 2);
         $datsans=[];
         $a=[];
-        $datsansnew=[];
         for ($i=0; $i < count($sans); $i++) {
             array_push($a, $sans[$i]->id);
             
@@ -448,20 +446,21 @@ class DatSanService
                         ->orderBy('start_time', 'desc')
                         ->paginate($soluong);
         }
-        $tongpage= $datsans->lastPage();
-        $datsans= $datsans->items();
+        
+        return $datsans;
+        
+    }
+
+    public function getAllDatSanByIdquan2($datsans)
+    {
+        $datsansnew=[];
         foreach ($datsans as $datsan) {
             $user = $this->userService->getUserById($datsan->iduser);
-            $san=$this->sanService->findById($datsan->idsan);
+            $san = $this->sanService->findById($datsan->idsan);
             $ds = new Datsan2($datsan->id, $san, $user, $datsan->start_time, $datsan->price, $datsan->xacnhan);
             array_push($datsansnew, $ds);
-            
         }
-        return [
-            "a"=>count($datsans),
-            "tongpage" => $tongpage,
-            "datsans"=>$datsansnew
-        ];
+        return $datsansnew;
     }
     public function getListDatSanByInnkeeper($innkeeper,$start_time){
         $quans=$this->quanService->getQuanByPhoneDaduocduyet( $innkeeper->phone);
