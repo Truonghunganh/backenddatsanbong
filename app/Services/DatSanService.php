@@ -452,18 +452,15 @@ class DatSanService
         $datsans= $datsans->items();
         foreach ($datsans as $datsan) {
             $user = $this->userService->getUserById($datsan->iduser);
-            foreach ($sans as $san) {
-                if ($datsan->idsan==$san->id) {
-                    $ds = new Datsan2($datsan->id, $san, $user, $datsan->start_time, $datsan->price, $datsan->xacnhan);
-                    array_push($datsansnew, $ds);
-                           
-                }
-            }
+            $san=$this->sanService->findById($datsan->idsan);
+            $ds = new Datsan2($datsan->id, $san, $user, $datsan->start_time, $datsan->price, $datsan->xacnhan);
+            array_push($datsansnew, $ds);
+            
         }
         return [
             "a"=>count($datsans),
-            "datsans"=>$datsansnew,
-            "tongpage"=> $tongpage
+            "tongpage" => $tongpage,
+            "datsans"=>$datsansnew
         ];
     }
     public function getListDatSanByInnkeeper($innkeeper,$start_time){
