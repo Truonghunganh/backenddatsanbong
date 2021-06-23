@@ -606,7 +606,7 @@ class DatSanController extends Controller
                     'message' => $validator->errors()
                 ]);
             }
-
+            return 1;
             $innkeeper = $this->checkTokenService->checkTokenInnkeeper($request);
             if ($innkeeper)  {
                 $quan= $this->quanService->findById($request->get('idquan'));
