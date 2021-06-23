@@ -785,10 +785,9 @@ class DatSanController extends Controller
                 return response()->json([
                     'status' => true,
                     'code' => Response::HTTP_OK,
-                    'count'=>count($datsans->items()),
-                    'datsans' => $datsans->items(),
-                     'tongpage' => $datsans->lastPage(),
-                    'quan' => $quan
+                    'datsans' => $this->datSanService->getAllDatSanByIdquan2($datsans->items()),
+                    'tongpage' => $datsans->lastPage()
+                    
                 ]);
             } else {
                 return response()->json([
