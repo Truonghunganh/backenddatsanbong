@@ -618,12 +618,15 @@ class DatSanController extends Controller
                         'message' => "token này không có quyền tri cập đến quán này"
                     ]); 
                 }
-                $datsans = $this->datSanService->getAllDatSanByIdquan($request->get("idquan"),$request->get("trangthai"),$request->get("time"),">=");
+                $soluong = $request->get('soluong') ??10;
+                $datsans = $this->datSanService->getAllDatSanByIdquan($request->get("idquan"),$request->get("trangthai"),$request->get("time"),">=",$soluong);
                 return response()->json([
                     'status' => true,
                     'code' => Response::HTTP_OK,
-                    'datsans' => $datsans,
-                    'quan'=>$quan
+                    'datsans' => $this->datSanService->getAllDatSanByIdquan1($datsans->items()),
+                    'tongpage' => $datsans->lastPage(),
+                    'quan' =>$quan
+
                 ]);
             } else {
                 return response()->json([
@@ -756,55 +759,5 @@ class DatSanController extends Controller
             ]);
         }
     }
-    public function getAllDatSanByInnkeeperAndIdquan1(Request $request)
-    {
-        try {
-            $validator = Validator::make($request->all(), [
-                'idquan' => 'required',
-                'trangthai' => 'required',
-                'time' => 'required'
-            ]);
-
-            if ($validator->fails()) {
-                return response()->json([
-                    'status' => false,
-                    'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
-                    'message' => $validator->errors()
-                ]);
-            }
-
-            $innkeeper = $this->checkTokenService->checkTokenInnkeeper($request);
-            if ($innkeeper) {
-                $quan = $this->quanService->findById($request->get('idquan'));
-                if ($innkeeper->phone != $quan->phone) {
-                    return response()->json([
-                        'status' => false,
-                        'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
-                        'message' => "token này không có quyền tri cập đến quán này"
-                    ]);
-                }
-                $datsans = $this->datSanService->getAllDatSanByIdquan1($request->get("idquan"), $request->get("trangthai"), $request->get("time"), ">=",10);
-                return response()->json([
-                    'status' => true,
-                    'code' => Response::HTTP_OK,
-                    'datsans' => $this->datSanService->getAllDatSanByIdquan2($datsans->items()),
-                    'tongpage' => $datsans->lastPage()
-                    
-                ]);
-            } else {
-                return response()->json([
-                    'status' => false,
-                    'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
-                    'message' => "token user false"
-                ]);
-            }
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => false,
-                'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
-                'message' => $e->getMessage()
-            ]);
-        }
-    }
-
+    
 }

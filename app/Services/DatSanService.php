@@ -116,60 +116,13 @@ class DatSanService
     {
         date_default_timezone_set("Asia/Ho_Chi_Minh");
         $time = date('Y-m-d H:i:s');
-        // return DatSan::orderBy('start_time', 'asc')
-        // ->where('iduser', $iduser)->where('start_time', '>=', $time)->join("sans","datsans.idsan",'sans.id')->join("quans","sans.idquan","quans.id")->get();
-
-        // return DatSan::select('id', 'start_time', "price", "xacnhan")->orderBy('start_time', 'desc')
-        //     ->where('iduser', $iduser)->where('start_time', '>=', $time)->where(function ($query) {
-
-        //     San::select("trangthai")->where("id","=", $query->idsan)->first()->where(function ($query) {
-        //         Quan::select("name", 'phone', 'address')->where('id','=', $query->idquan);
-        //     });
-        // })->get();
         return DB::table('datsans')
                 ->where('iduser', $iduser)
                 ->where('start_time', '>=', $time)
                 ->orderBy('start_time', 'asc')
                 ->paginate($soluong);
         
-
-        
-        $listdatsanByiduser= DB::table('datsans')->where('iduser', $iduser)->where('start_time','>=', $time)->get();
-        $sans= DB::table('sans')->get();
-        $quans=DB::table('quans')->get();
-        $san=$sans[0];
-        $quan=$quans[0];
-        $mangdatsantruocngayhientai=[];
-        for ($i=0; $i < count($listdatsanByiduser); $i++) { 
-            for ($j=0; $j <count($sans) ; $j++) { 
-                if ($listdatsanByiduser[$i]->idsan==$sans[$j]->id) {
-                    $san=$sans[$j];
-                    for ($k = 0; $k < count($quans); $k++) {
-                        if ($quans[$k]->id == $sans[$j]->idquan) {
-                            $quan=$quans[$k];
-                            break;
-                        }
-                    }
-                    break;
-                }
-            }
-            $datsan=new datsanS($listdatsanByiduser[$i]->id,
-                    $quan->name,
-                    $quan->address,
-                    $quan->phone,
-                    $san->name,
-                    $listdatsanByiduser[$i]->start_time,
-                    $san->numberpeople,
-                    $listdatsanByiduser[$i]->price,
-                    $listdatsanByiduser[$i]->xacnhan
-                    ,$san->trangthai);
-            array_push($mangdatsantruocngayhientai,$datsan);
         }
-        $keys = array_column($mangdatsantruocngayhientai, 'time');
-        // SORT_ASC : laf tăng dần
-        array_multisort($keys, SORT_ASC,$mangdatsantruocngayhientai);
-        return $mangdatsantruocngayhientai;
-    }
     public function getDatSansByInnkeeperAndIdquanAndNgay($sans,  $start_time){
         $datsans = array();
         $nam = substr($start_time, 0, 4);
@@ -177,7 +130,6 @@ class DatSanService
         $ngay = substr($start_time, 8, 2);
         foreach ($sans as $san) {
             $datsan = DB::table('datsans')->where('idsan', $san->id)->whereDay('start_time', $ngay)->whereMonth('start_time', $thang)->whereYear('start_time', $nam)->get();
-            
             $datsannews = $this->mangdatsancuamotsan($datsan);
             array_push($datsans, $datsannews);
         }
@@ -363,29 +315,6 @@ class DatSanService
         }
         return false;
     }
-    
-                // $mangdatsantruoc1tuan = DB::table('datsans')->where('start_time', '<', substr($week, 0, 10))->get();
-                // if (count($mangdatsantruoc1tuan) != 0) {
-                //     $id = $mangdatsantruoc1tuan[0]->id;
-                // }
-                // if (count(DB::table('datsans')->where('start_time', '=', $request->get('start_time'))->where('idsan', '=', $idsan)->get()) == 0) {
-                //     return Datsan::updateOrCreate(
-                //         [
-                //             'id' => $id
-                //         ],
-                //         [
-                //             'idsan' => $request->get('idsan'),
-                //             'iduser' => $iduser,
-                //             'start_time' => $request->get('start_time'),
-                //             'price' => $request->get('price'),
-                //             'xacnhan'=>false,
-                //             'Create_time' => Carbon::now()
-                //         ]
-
-                //     );
-                // }
-            
-            
     public function thayDoiDatSanByInnkeeper($timeOld, $timeNew, $sanOld, $sanNew,$datsanOld){
         try {
             DB::beginTransaction();
@@ -424,33 +353,7 @@ class DatSanService
     public function getdatsan($idsan,$start_time){
         return DatSan::where('idsan',$idsan)->where('start_time',$start_time)->first();
     }
-    public function getAllDatSanByIdquan($idquan, $xacnhan, $time, $dau)
-    {
-        $sans = $this->sanService->getSansByIdquan($idquan);
-        $nam = substr($time, 0, 4);
-        $thang = substr($time, 5, 2);
-        $ngay = substr($time, 8, 2);
-        $datsansnew = [];
-        $datsans=[];
-        foreach ($sans as $san) {
-            if ($dau == "=") {
-                $datsans = DatSan::where('idsan', $san->id)->where('xacnhan', $xacnhan)->whereYear("start_time", $dau, $nam)->whereMonth("start_time", $dau, $thang)->whereDay("start_time", $dau, $ngay)->get();
-            } else {
-                $datsans = DatSan::where('idsan', $san->id)->where('xacnhan', $xacnhan)->where("start_time", $dau, $time)->get();
-            }
-
-            foreach ($datsans as $datsan) {
-                $user = $this->userService->findById($datsan->iduser);
-                $ds = new Datsan2($datsan->id, $san, $user, $datsan->start_time, $datsan->price, $datsan->xacnhan);
-                array_push($datsansnew, $ds);
-            }
-        }
-        $keys = array_column($datsansnew, 'start_time');
-        array_multisort($keys, SORT_ASC, $datsansnew);
-        return $datsansnew;
-    }
-    
-    public function getAllDatSanByIdquan1($idquan,$xacnhan,$time,$dau,$soluong){
+    public function getAllDatSanByIdquan($idquan,$xacnhan,$time,$dau,$soluong){
         $sans=$this->sanService->getSansByIdquan($idquan);
         $nam= substr($time, 0, 4);
         $thang= substr($time,5, 2);
@@ -459,7 +362,6 @@ class DatSanService
         $a=[];
         for ($i=0; $i < count($sans); $i++) {
             array_push($a, $sans[$i]->id);
-            
         }
         if ($dau == "=") {
             $datsans = DatSan::where('xacnhan', $xacnhan)
@@ -481,7 +383,7 @@ class DatSanService
         
     }
 
-    public function getAllDatSanByIdquan2($datsans)
+    public function getAllDatSanByIdquan1($datsans)
     {
         $datsansnew=[];
         foreach ($datsans as $datsan) {
