@@ -91,7 +91,7 @@ Route::prefix('v1')->group(function () {
     Route::post('getTongDoanhCuaMotQuanThuTheoNamByAdmin', 'App\Http\Controllers\API\V1\DoanhThuController@getTongDoanhCuaMotQuanThuTheoNamByAdmin');
     Route::post('getDoanhThuListQuanCuaMotNamByAdmin', 'App\Http\Controllers\API\V1\DoanhThuController@getDoanhThuListQuanCuaMotNamByAdmin');
     Route::get('getAllCommentCuaMotQuanByAdmin', 'App\Http\Controllers\API\V1\CommentController@getAllCommentCuaMotQuanByAdmin');
-    Route::resource('users', 'App\Http\Controllers\API\V1\UserController')->only(['index']);
+    Route::resource('users', 'App\Http\Controllers\API\V1\UserController')->only(['index', 'destroy']);
     Route::put('editUserByAdmin', 'App\Http\Controllers\API\V1\UserController@editUserByAdmin');
     Route::get('searchUsersByAdmin', 'App\Http\Controllers\API\V1\UserController@searchUsersByAdmin');
     
@@ -100,7 +100,7 @@ Route::prefix('v1')->group(function () {
     Route::get('checkToken', 'App\Http\Controllers\API\V1\CheckTokenController@checkToken');
     Route::post('register', 'App\Http\Controllers\API\V1\UserController@register');
 
-   Route::post('getAllDatSanByInnkeeperAndIdquan1', 'App\Http\Controllers\API\V1\DatSanController@getAllDatSanByInnkeeperAndIdquan1');
+   //Route::post('getAllDatSanByInnkeeperAndIdquan1', 'App\Http\Controllers\API\V1\DatSanController@getAllDatSanByInnkeeperAndIdquan1');
     
 
 });

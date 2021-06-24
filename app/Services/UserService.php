@@ -15,6 +15,7 @@ class UserService
     public function __construct(QuanService $quanService){
         $this->quanService = $quanService;
     }
+
     public function getListDatSanByIduser($request)
     {
         if ($request->get("iduser")) {
@@ -43,7 +44,18 @@ class UserService
         })->get();
         return $users;
     }
+    public function deleteUserByAdmin($id){
+        DB::beginTransaction();
+        try {
+            User::find($id)->delete();
+            DB::commit();
+            return false;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw new \Exception($e->getMessage());
+        }
 
+    }
     public function editUserByAdmin($request, $id)
     {
         DB::beginTransaction();

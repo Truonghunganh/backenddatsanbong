@@ -20,6 +20,54 @@ class UserController extends Controller
         $this->userService = $userService;
         $this->checkTokenService = $checkTokenService;
     }
+    public function destroy(Request $request, $id)
+    {
+        try {
+            $admin = $this->checkTokenService->checkTokenAdmin($request);
+            if ($admin) {
+                $user = $this->userService->findById($id);
+                if (!$user) {
+                    return response()->json([
+                        'status' => false,
+                        'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                        'message' => "không tìm thấy có id =" . $id
+                    ]);
+                }
+                if ($user->role=='admin') {
+                    return response()->json([
+                        'status' => false,
+                        'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                        'message' => "không thể xóa được"
+                    ]);
+                }
+                if ($this->userService->deleteUserByAdmin($id)) {
+                    return response()->json([
+                        'status' => false,
+                        'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                        'message' => "xóa không thành công"
+                    ]);
+                }
+                return response()->json([
+                    'status' => true,
+                    'code' => Response::HTTP_OK,
+                    'message' => "đã xóa thành công có id = " . $id
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                    'message' => "token sai"
+                ]);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+    
     public function searchUsersByAdmin(Request $request){
         try {
             $validator = Validator::make($request->all(), [
