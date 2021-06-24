@@ -116,7 +116,6 @@ class DatSanController extends Controller
     }
     public function getListDatSanByUserToken(Request $request){
         try {
-            return 3;
             $userbyToken=$this->checkTokenService->checkTokenUser($request);
             if ($userbyToken) {
                 $iduser=$userbyToken->id;
