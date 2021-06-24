@@ -119,11 +119,13 @@ class DatSanController extends Controller
             $userbyToken=$this->checkTokenService->checkTokenUser($request);
             if ($userbyToken) {
                 $iduser=$userbyToken->id;
-                $datsans= $this->datSanService->getListDatSanByIduser($iduser);
+                $soluong = $request->get('soluong') ?? 10;
+                $datsans= $this->datSanService->getListDatSanByIduser($iduser,$soluong);
                 return response()->json([
                     'status' => true,
                     'code' => Response::HTTP_OK,
-                    'datsans' => $datsans
+                    'datsans' => $this->datSanService->getListDatSanByIduser1($datsans->items()),
+                    'tongpage' => $datsans->lastPage()
                 ]);
 
             }

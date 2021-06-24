@@ -22,9 +22,8 @@ class UserService
         }
         return [];
     }
-    public function getUserById($id){
-        $user = DB::table('users')->where('id', $id)->first();
-        return new User1($user->id, $user->name, $user->phone, $user->gmail, $user->address);
+    public function findById($id){
+        return DB::table('users')->select('id','name','phone','gmail','address')->where('id', $id)->first();
     }
     
     public function getUserByUser($user)
