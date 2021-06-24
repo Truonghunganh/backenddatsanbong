@@ -24,13 +24,9 @@ class UserService
         return [];
     }
     public function findById($id){
-        return DB::table('users')->select('id','name','phone','gmail','address')->where('id', $id)->first();
+        return DB::table('users')->select('id','role','name','phone','gmail','address')->where('id', $id)->first();
     }
     
-    public function getUserByUser($user)
-    {
-        return new User1($user->id, $user->name, $user->phone, $user->gmail, $user->address);
-    }
     public function getUserByAdmin($user,$soluong=10)
     {
         return User::select('id', 'name', 'address', 'phone', 'gmail')->where("role",$user)->paginate($soluong);
