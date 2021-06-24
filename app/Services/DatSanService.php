@@ -97,7 +97,7 @@ class DatSanService
             $san=$this->sanService->findById($datsans[$i]->idsan);
             $quan=$this->quanService->findById($san->idquan);
             $datsan = new datsanS(
-                $datsans->id,
+                $datsans[$i]->id,
                 $quan->name,
                 $quan->address,
                 $quan->phone,
