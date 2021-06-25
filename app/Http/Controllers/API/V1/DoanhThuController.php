@@ -405,7 +405,7 @@ class DoanhThuController extends Controller
                 return response()->json([
                     'status'  => true,
                     'code'    => Response::HTTP_OK,
-                    'mangChitietDoanhthus' => $this->datSanService->getAllDatSanByIdquan($quan->id,1,$doanhthu->time,"=")
+                    'mangChitietDoanhthus' => $this->datSanService->getDatSansCua1NgayByIdquanChodoanhThu($quan->id, 1, $doanhthu->time)
                 ]);
             } else {
                 return response()->json([
@@ -466,7 +466,7 @@ class DoanhThuController extends Controller
                 return response()->json([
                     'status'  => true,
                     'code'    => Response::HTTP_OK,
-                    'mangChitietDoanhthus' => $this->datSanService->getAllDatSanByIdquan($quan->id,1,$doanhthu->time,"=")
+                    'mangChitietDoanhthus' => $this->datSanService->getDatSansCua1NgayByIdquanChodoanhThu($quan->id,1,$doanhthu->time)
                 ]);
             } else {
                 return response()->json([

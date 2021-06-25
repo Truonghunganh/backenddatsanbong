@@ -405,6 +405,26 @@ class DatSanService
         }
         return $datsans; 
     }
+    public function getDatSansCua1NgayByIdquanChodoanhThu($idquan, $xacnhan, $time)
+    {
+        $sans = $this->sanService->getSansByIdquan($idquan);
+        $nam = substr($time, 0, 4);
+        $thang = substr($time, 5, 2);
+        $ngay = substr($time, 8, 2);
+        $datsansnew = [];
+        foreach ($sans as $san) {
+            $datsans = DatSan::where('idsan', $san->id)->where('xacnhan', $xacnhan)->whereYear("start_time", "=", $nam)->whereMonth("start_time", "=", $thang)->whereDay("start_time", "=", $ngay)->get();
+            foreach ($datsans as $datsan) {
+                $user = $this->userService->findById($datsan->iduser);
+                $ds = new Datsan2($datsan->id, $san, $user, $datsan->start_time, $datsan->price, $datsan->xacnhan);
+                array_push($datsansnew, $ds);
+            }
+        }
+        $keys = array_column($datsansnew, 'start_time');
+        array_multisort($keys, SORT_ASC, $datsansnew);
+        return $datsansnew;
+    }
+    
 }
 class Datsan1
 {
