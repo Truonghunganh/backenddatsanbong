@@ -9,7 +9,7 @@ là tạo ra UserController có tất cả các phương thức ( là cái mẫu
 - tạo file dữ liệu : php artisan make:seeder UserSeeder
 -tạo dữ liệu từ các bảng trên : php artisan db:seed
 - Xóa tất cả các bảng : php artisan migrate:rollback(chạy hàm down())
-- reset lại dữ liệu :php artisan migrate --forces
+- reset lại dữ liệu :php artisan migrate --force
 jjj
 
 

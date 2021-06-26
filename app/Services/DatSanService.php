@@ -82,6 +82,12 @@ class DatSanService
             $thang = substr($start_time, 5, 2);
             $ngay = substr($start_time, 8, 2);
             if ($xacnhan) {
+                return "bạn không thể xác nhận được nữa1";
+            } else {
+                return "bạn không thể xác nhận được nữa2";
+            }
+            
+            if ($xacnhan) {
                 $doanhthu = DB::table('doanhthus')->whereDay('time', $ngay)->whereMonth('time', $thang)->whereYear('time', $nam)->where('idquan', '=', $san->idquan)->first();
                 if ($doanhthu) {
                     $priceNew = (int)$doanhthu->doanhthu + (int)$price;
