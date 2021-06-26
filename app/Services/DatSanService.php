@@ -70,14 +70,27 @@ class DatSanService
             if ($datsan->xacnhan==$xacnhan) {
                 return "bạn không thể xác nhận được nữa";
             }
+            date_default_timezone_set("Asia/Ho_Chi_Minh");
+            $time = date('Y-m-d H:i:s');
             $xacnhan = DB::update('update datsans set xacnhan = ? where id = ?', [$xacnhan, $datsan->id]);
             $nam = substr($start_time, 0, 4);
             $thang = substr($start_time, 5, 2);
             $ngay = substr($start_time, 8, 2);
             if ($xacnhan) {
                 $doanhthu = DB::table('doanhthus')->whereDay('time', $ngay)->whereMonth('time', $thang)->whereYear('time', $nam)->where('idquan', '=', $san->idquan)->first();
-                $priceNew = (int)$doanhthu->doanhthu + (int)$price;
-                DB::update('update doanhthus set doanhthu=? where id = ?', [$priceNew, $doanhthu->id]);
+                if ($doanhthu) {
+                    $priceNew = (int)$doanhthu->doanhthu + (int)$price;
+                    DB::update('update doanhthus set doanhthu=? ,updated_at=? where id = ?', [$priceNew, $time, $doanhthu->id]);    
+                }else{
+                    $data=[
+                        "idquan"=>$san->idquan,
+                        "doanhthu"=>$price,
+                        "time"=> substr($start_time, 0, 10)." 00:00:00",
+                        "created_at" => $time,
+                        "updated_at" => $time
+                    ];
+                    DoanhThu::insert($data);
+                }
                 $chonquan = DB::table('chonquans')->where("iduser", $datsan->iduser)->where("idquan", $san->idquan)->first();
                 if ($chonquan) {
                     DB::update('update chonquans set solan = ? where id = ?', [$chonquan->solan + 1, $chonquan->id]);
@@ -86,6 +99,10 @@ class DatSanService
                 }
             } else {
                 $doanhthu = DB::table('doanhthus')->whereDay('time', $ngay)->whereMonth('time', $thang)->whereYear('time', $nam)->where('idquan', '=', $san->idquan)->first();
+                if ($doanhthu) {
+                    $priceNew = (int)$doanhthu->doanhthu - (int)$price;
+                    DB::update('update doanhthus set doanhthu=? ,updated_at=? where id = ?', [$priceNew, $time, $doanhthu->id]);
+                }
                 $priceNew = (int)$doanhthu->doanhthu - (int)$price;
                 DB::update('update doanhthus set doanhthu=? where id = ?', [$priceNew, $doanhthu->id]);
                 $chonquan = DB::table('chonquans')->where("iduser", $datsan->iduser)->where("idquan", $san->idquan)->first();
