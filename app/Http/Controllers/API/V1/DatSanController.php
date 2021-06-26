@@ -343,6 +343,12 @@ class DatSanController extends Controller
                 'iddatsan' => 'required',
                 'xacnhan' => 'required'
             ]);
+            $xacnhan= $request->get('xacnhan');
+            if ($xacnhan) {
+                return "bạn không thể xác nhận được nữa1" . $xacnhan;
+            } else {
+                return "bạn không thể xác nhận được nữa2" . $xacnhan;
+            }
             return response()->json([
                 'status' => false,
                 'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
