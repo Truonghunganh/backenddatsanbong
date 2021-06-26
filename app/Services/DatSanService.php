@@ -103,8 +103,6 @@ class DatSanService
                     $priceNew = (int)$doanhthu->doanhthu - (int)$price;
                     DB::update('update doanhthus set doanhthu=? ,updated_at=? where id = ?', [$priceNew, $time, $doanhthu->id]);
                 }
-                $priceNew = (int)$doanhthu->doanhthu - (int)$price;
-                DB::update('update doanhthus set doanhthu=? where id = ?', [$priceNew, $doanhthu->id]);
                 $chonquan = DB::table('chonquans')->where("iduser", $datsan->iduser)->where("idquan", $san->idquan)->first();
                 if ($chonquan) {
                     DB::update('update chonquans set solan = ? where id = ?', [$chonquan->solan - 1, $chonquan->id]);
