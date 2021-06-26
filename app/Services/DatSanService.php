@@ -72,6 +72,9 @@ class DatSanService
             }
             date_default_timezone_set("Asia/Ho_Chi_Minh");
             $time = date('Y-m-d H:i:s');
+            if ($time>$datsan->start_time) {
+                return "bạn không thể xác nhận khi thời gian hiện tại lớn hơn thời gian đặt sân được";
+            }
             $xacnhan = DB::update('update datsans set xacnhan = ? where id = ?', [$xacnhan, $datsan->id]);
             $nam = substr($start_time, 0, 4);
             $thang = substr($start_time, 5, 2);

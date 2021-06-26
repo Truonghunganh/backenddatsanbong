@@ -398,7 +398,7 @@ class DatSanController extends Controller
                     return response()->json([
                         'status' => false,
                         'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
-                        'message' => "xác nhận thất bại",
+                        'message' => $xacnhan,
                     ]);
                 }
                 
