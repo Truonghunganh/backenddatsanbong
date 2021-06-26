@@ -345,13 +345,13 @@ class DatSanController extends Controller
             ]);
             $xacnhan= $request->get('xacnhan');
             if ($xacnhan) {
-                response()->json([
+              return  response()->json([
                 'status' => false,
                 'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
                 'message' =>"bạn không thể xác nhận được nữa1" . $xacnhan
                 ]);
             } else {
-                response()->json([
+                return response()->json([
                     'status' => false,
                     'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
                     'message' => "bạn không thể xác nhận được nữa2" . $xacnhan
