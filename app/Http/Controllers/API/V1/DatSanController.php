@@ -343,7 +343,11 @@ class DatSanController extends Controller
                 'iddatsan' => 'required',
                 'xacnhan' => 'required'
             ]);
-
+            return response()->json([
+                'status' => false,
+                'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                'message' =>$request->get('xacnhan')
+            ]);
             if ($validator->fails()) {
                 return response()->json([
                     'status' => false,
