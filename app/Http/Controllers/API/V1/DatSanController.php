@@ -343,25 +343,6 @@ class DatSanController extends Controller
                 'iddatsan' => 'required',
                 'xacnhan' => 'required'
             ]);
-            $xacnhan= $request->get('xacnhan');
-            if ($xacnhan) {
-              return  response()->json([
-                'status' => false,
-                'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
-                'message' =>"bạn không thể xác nhận được nữa1" . $xacnhan
-                ]);
-            } else {
-                return response()->json([
-                    'status' => false,
-                    'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
-                    'message' => "bạn không thể xác nhận được nữa2" . $xacnhan
-                ]);
-            }
-            return response()->json([
-                'status' => false,
-                'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
-                'message' =>$request->get('xacnhan')
-            ]);
             if ($validator->fails()) {
                 return response()->json([
                     'status' => false,
@@ -369,7 +350,8 @@ class DatSanController extends Controller
                     'message' => $validator->errors()
                 ]);
             }
-
+            $xacnhan = $request->get('xacnhan');
+            
             $innkeeper = $this->checkTokenService->checkTokenInnkeeper($request);
             if ($innkeeper) {
                 $datsan=$this->datSanService->find($request->get('iddatsan'));
@@ -405,8 +387,8 @@ class DatSanController extends Controller
                         'message' => "token này không có quyền tri cập đến quán này"
                     ]);
                 }
-                $xacnhan = $this->datSanService->xacNhanDatsan($datsan,$request->get('xacnhan'),$datsan->start_time,$datsan->price,$san);
-                if (!$xacnhan) {
+                $xacnhan1 = $this->datSanService->xacNhanDatsan($datsan, $xacnhan,$datsan->start_time,$datsan->price,$san);
+                if (!$xacnhan1) {
                     return response()->json([
                         'status' => true,
                         'code' => Response::HTTP_OK,
