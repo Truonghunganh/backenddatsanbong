@@ -354,12 +354,12 @@ class DatSanController extends Controller
 
             $innkeeper = $this->checkTokenService->checkTokenInnkeeper($request);
             if ($innkeeper) {
-                $datsan=$this->datSanService->getDatSanById($request->get('iddatsan'),false);
+                $datsan=$this->datSanService->find($request->get('iddatsan'));
                 if(!$datsan) {
                     return response()->json([
                         'status' => false,
                         'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
-                        'message' => "không tìm thấy id đặt sân này hoặt đặt sân này đã xác nhận rồi"
+                        'message' => "không tìm thấy id đặt sân này"
                     ]);
                 }
                 $san=$this->sanService->findById($datsan->idsan);
