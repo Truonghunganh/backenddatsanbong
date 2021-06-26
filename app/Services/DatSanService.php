@@ -81,10 +81,11 @@ class DatSanService
             $nam = substr($start_time, 0, 4);
             $thang = substr($start_time, 5, 2);
             $ngay = substr($start_time, 8, 2);
-            if ($xacnhan) {
-                return "bạn không thể xác nhận được nữa1";
+
+            if ($xacnhan==true) {
+                return "bạn không thể xác nhận được nữa1".$xacnhan;
             } else {
-                return "bạn không thể xác nhận được nữa2";
+                return "bạn không thể xác nhận được nữa2".$xacnhan;
             }
             
             if ($xacnhan) {
