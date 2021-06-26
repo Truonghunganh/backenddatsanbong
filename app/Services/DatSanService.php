@@ -35,7 +35,9 @@ class DatSanService
             $doanhthu = DoanhThu::where('idquan', $san->idquan)->where('time', $time)->first();
             if ($datsan->xacnhan == 1 && $doanhthu) {
                 $tien = (int)$doanhthu->doanhthu - (int)$datsan->price;
-                DB::update('update doanhthus set doanhthu= ? where id = ?', [$tien, $doanhthu->id]);
+                date_default_timezone_set("Asia/Ho_Chi_Minh");
+                $time1 = date('Y-m-d H:i:s');
+                DB::update('update doanhthus set doanhthu= ?,updated_at=? where id = ?', [$tien, $time1, $doanhthu->id]);
             }
                 
             DB::commit();
