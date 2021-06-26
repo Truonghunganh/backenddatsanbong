@@ -341,6 +341,7 @@ class DatSanController extends Controller
         try {
             $validator = Validator::make($request->all(), [
                 'iddatsan' => 'required',
+                'xacnhan' => 'required'
             ]);
 
             if ($validator->fails()) {
@@ -386,8 +387,8 @@ class DatSanController extends Controller
                         'message' => "token này không có quyền tri cập đến quán này"
                     ]);
                 }
-                $xacnhan = $this->datSanService->xacNhanDatsan($datsan,1,$datsan->start_time,$datsan->price,$san);
-                if ($xacnhan) {
+                $xacnhan = $this->datSanService->xacNhanDatsan($datsan,$request->get('xacnhan'),$datsan->start_time,$datsan->price,$san);
+                if (!$xacnhan) {
                     return response()->json([
                         'status' => true,
                         'code' => Response::HTTP_OK,

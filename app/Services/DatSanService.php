@@ -67,26 +67,40 @@ class DatSanService
     public function xacNhanDatsan($datsan,$xacnhan,$start_time,$price,$san){
         DB::beginTransaction();
         try {
+            if ($datsan->xacnhan==$xacnhan) {
+                return "bạn không thể xác nhận được nữa";
+            }
             $xacnhan = DB::update('update datsans set xacnhan = ? where id = ?', [$xacnhan, $datsan->id]);
             $nam = substr($start_time, 0, 4);
             $thang = substr($start_time, 5, 2);
             $ngay = substr($start_time, 8, 2);
-            $doanhthu = DB::table('doanhthus')->whereDay('time', $ngay)->whereMonth('time', $thang)->whereYear('time', $nam)->where('idquan', '=', $san->idquan)->first();
-            $priceNew = (int)$doanhthu->doanhthu + (int)$price;
-            DB::update('update doanhthus set doanhthu=? where id = ?', [$priceNew, $doanhthu->id]);
-            $chonquan = DB::table('chonquans')->where("iduser", $datsan->iduser)->where("idquan", $san->idquan)->first();
-            if ($chonquan) {
-                DB::update('update chonquans set solan = ? where id = ?', [$chonquan->solan + 1, $chonquan->id]);
+            if ($xacnhan) {
+                $doanhthu = DB::table('doanhthus')->whereDay('time', $ngay)->whereMonth('time', $thang)->whereYear('time', $nam)->where('idquan', '=', $san->idquan)->first();
+                $priceNew = (int)$doanhthu->doanhthu + (int)$price;
+                DB::update('update doanhthus set doanhthu=? where id = ?', [$priceNew, $doanhthu->id]);
+                $chonquan = DB::table('chonquans')->where("iduser", $datsan->iduser)->where("idquan", $san->idquan)->first();
+                if ($chonquan) {
+                    DB::update('update chonquans set solan = ? where id = ?', [$chonquan->solan + 1, $chonquan->id]);
+                } else {
+                    DB::insert('insert into chonquans (iduser, idquan,solan) values (?, ?,?)', [$datsan->iduser, $san->idquan, 1]);
+                }
             } else {
-                DB::insert('insert into chonquans (iduser, idquan,solan) values (?, ?,?)', [$datsan->iduser, $san->idquan, 1]);
+                $doanhthu = DB::table('doanhthus')->whereDay('time', $ngay)->whereMonth('time', $thang)->whereYear('time', $nam)->where('idquan', '=', $san->idquan)->first();
+                $priceNew = (int)$doanhthu->doanhthu - (int)$price;
+                DB::update('update doanhthus set doanhthu=? where id = ?', [$priceNew, $doanhthu->id]);
+                $chonquan = DB::table('chonquans')->where("iduser", $datsan->iduser)->where("idquan", $san->idquan)->first();
+                if ($chonquan) {
+                    DB::update('update chonquans set solan = ? where id = ?', [$chonquan->solan - 1, $chonquan->id]);
+                } else {
+                    DB::insert('insert into chonquans (iduser, idquan,solan) values (?, ?,?)', [$datsan->iduser, $san->idquan, 1]);
+                }
             }
-
+            
             DB::commit();
-            return true;
+            return false;
         } catch (\Exception $e) {
             DB::rollBack();
-            return false;
-            throw new \Exception($e->getMessage());
+            return $e->getMessage();
         }
                 
     }
