@@ -387,6 +387,17 @@ class DatSanController extends Controller
                         'message' => "token này không có quyền tri cập đến quán này"
                     ]);
                 }
+                date_default_timezone_set("Asia/Ho_Chi_Minh");
+                $time = date('Y-m-d H:i:s');
+                $time = strftime("%Y-%m-%d %H:%M:%S", strtotime(date("Y-m-d H:i:s", strtotime($time)) . "+1 days"));
+                if ($time > $datsan->start_time && $datsan->xacnhan) {
+                    return response()->json([
+                        'status' => false,
+                        'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                        'message' => "không thể thây đổi được vì đã xác nhận rồi thì thời gian thay đổi phải lớn hơn 1 ngày mới thay đổi"
+                    ]);
+                }
+                
                 $xacnhan1 = $this->datSanService->xacNhanDatsan($datsan, $xacnhan,$datsan->start_time,$datsan->price,$san);
                 if (!$xacnhan1) {
                     return response()->json([
