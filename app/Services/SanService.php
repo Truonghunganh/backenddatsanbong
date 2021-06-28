@@ -8,6 +8,9 @@ use App\Models\Models\San;
 
 class SanService
 {
+    public function getSanByIdVaTrangThai($id,$trangthai){
+        return San::where('id',$id)->where('trangthai',$trangthai)->first();
+    }
     public function getSansByIdquanVaTrangthai($idquan,$trangthai)
     {
         $sans = San::query()->where('idquan', '=', $idquan)->where('trangthai',$trangthai)->get();

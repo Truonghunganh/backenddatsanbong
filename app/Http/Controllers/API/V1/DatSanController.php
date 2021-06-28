@@ -70,6 +70,30 @@ class DatSanController extends Controller
             
             $tonkenUser=$this->checkTokenService->checkTokenUser($request);
             if($tonkenUser){
+                $san=$this->sanService->getSanByIdVaTrangThai($request->get('idsan'),1);
+                if (!$san) {
+                    return response()->json([
+                        'status' => false,
+                        'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                        'message' => "bạn không đặt sân này vì không tìm thấy sân này hoặc sân này chưa hoạt động",
+                    ]);
+                }
+                $quan= $this->quanService->findByIdVaTrangThai($san->idquan, 1);
+                if (!$quan) {
+                    return response()->json([
+                        'status' => false,
+                        'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                        'message' => "bạn không đặt sân này vì không tìm thấy quán hoặc quán này chưa hoạt động",
+                    ]);
+                }
+                $innkeeper=$this->userService->getUserByPhone($quan->phone);
+                if (!$innkeeper) {
+                    return response()->json([
+                        'status' => false,
+                        'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                        'message' => "bạn không đặt sân này vì không tìm thấy chủ quán này",
+                    ]);
+                }
                 $this->checkddatsan= $this->settings->get("checkdatsan");
                 if ($this->checkddatsan) {
                     $this->settings->put('checkdatsan', false);
