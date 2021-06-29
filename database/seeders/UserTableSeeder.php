@@ -234,7 +234,7 @@ class UserTableSeeder extends Seeder
         
 
         // admin
-        $phone= "6574839201";
+        $phone= "0919257806";
         $data = [
             "name" => "đồ thị minh thúy",
             "role" => "admin",
