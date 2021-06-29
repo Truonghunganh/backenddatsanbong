@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Services\SanService;
 use App\Services\QuanService;
 use App\Services\DoanhThuService;
+use App\Services\UserService;
 use App\Services\ReviewService;
 use App\Settings;
 
@@ -22,15 +23,18 @@ class DatSanController extends Controller
     protected $doanhThuService;
     protected $reviewService;
     protected $settings;
+    protected $userService;
     protected $quanService;
     private $checkddatsan;
+
     public function __construct(
         DatSanService $datSanService,
         CheckTokenService $checkTokenService,
         SanService $sanService, 
         QuanService $quanService,
         DoanhThuService $doanhThuService,
-        ReviewService $reviewService, 
+        ReviewService $reviewService,
+        UserService $userService,
         Settings $settings
         ){
         $this->datSanService = $datSanService;
@@ -40,6 +44,7 @@ class DatSanController extends Controller
         $this->doanhThuService = $doanhThuService;
         $this->reviewService = $reviewService;
         $this->settings = $settings;
+        $this->userService = $userService;
     }
     // show là add data lên (để thêm vào)
     public function store(Request $request)
