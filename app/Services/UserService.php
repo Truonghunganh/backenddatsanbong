@@ -139,6 +139,7 @@ class UserService
             date_default_timezone_set("Asia/Ho_Chi_Minh");
             $time = date('Y-m-d H:i:s');
             $data = [
+                "trangthai"=>true,
                 "name" => $request->get('name'),
                 "role" => $request->get('role'),
                 "phone" => $request->get('phone'),

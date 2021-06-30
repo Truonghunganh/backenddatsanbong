@@ -80,13 +80,12 @@ class CheckTokenService
 
     public function checkTokenInnkeeper($request)
     {
-
         try {
             $token = $request->header('token');
             if (!$token) {
                 return false;
             }
-            return User::select("id", "name", "phone", "gmail", "address", "role")->where('role', '=', "innkeeper")->where('token', $token)->first();
+            return User::select("id", "name", "phone", "gmail", "address", "role","trangthai")->where('role', '=', "innkeeper")->where('token', $token)->first();
         } catch (\Exception $e) {
             return false;
         }
