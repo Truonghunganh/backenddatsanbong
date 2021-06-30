@@ -33,7 +33,7 @@ class UserController extends Controller
                     'message' => $validator->errors()
                 ]);
             }
-            $id=$request->get('id');
+            $id=$request->get('iduser');
             $admin = $this->checkTokenService->checkTokenAdmin($request);
             if ($admin) {
                 $user = $this->userService->findById($id);
