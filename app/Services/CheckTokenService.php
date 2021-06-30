@@ -45,7 +45,7 @@ class CheckTokenService
             if (!$token) {
                 return false;
             }
-            return User::select("id","name", "phone", "gmail","address", "role")->where('role', '=', "user")->where('token', $token)->first();
+            return User::select("id","name", "phone", "gmail","address", "role","trangthai")->where('role', '=', "user")->where('token', $token)->first();
         
         } catch (\Exception $e) {
             return false;
@@ -58,7 +58,7 @@ class CheckTokenService
             if (!$token) {
                 return false;
             }
-            return User::select("id", "name","phone","gmail","address", "role")-> where('token',"=", $token)->first();
+            return User::select("id", "name","phone","gmail","address", "role","trangthai")-> where('token',"=", $token)->first();
         } catch (\Exception $e) {
             return false;
         }
