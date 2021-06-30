@@ -94,8 +94,9 @@ Route::prefix('v1')->group(function () {
     Route::resource('users', 'App\Http\Controllers\API\V1\UserController')->only(['index', 'destroy']);
     Route::put('editUserByAdmin', 'App\Http\Controllers\API\V1\UserController@editUserByAdmin');
     Route::get('searchUsersByAdmin', 'App\Http\Controllers\API\V1\UserController@searchUsersByAdmin');
+    Route::post('thayDoiTrangThaiUser', 'App\Http\Controllers\API\V1\UserController@thayDoiTrangThaiUser');
     
-
+    
     Route::post('login', 'App\Http\Controllers\API\V1\CheckTokenController@login');
     Route::get('checkToken', 'App\Http\Controllers\API\V1\CheckTokenController@checkToken');
     Route::post('register', 'App\Http\Controllers\API\V1\UserController@register');

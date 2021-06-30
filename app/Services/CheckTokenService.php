@@ -70,7 +70,7 @@ class CheckTokenService
             if (!$token) {
                 return false;
             }
-            return User::select("id", "name", "phone", "gmail","address", "role")->where('role', '=', "admin")->where('token', $token)->first();
+            return User::select("id", "name", "phone", "gmail","address", "role","trangthai")->where('role', '=', "admin")->where('token', $token)->first();
         } catch (\Exception $e) {
             return false;
         }

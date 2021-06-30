@@ -24,12 +24,12 @@ class UserService
         return [];
     }
     public function findById($id){
-        return DB::table('users')->select('id','role','name','phone','gmail','address')->where('id', $id)->first();
+        return DB::table('users')->select('id','role','name','phone','gmail','address','trangthai')->where('id', $id)->first();
     }
     
     public function getUserByAdmin($user,$soluong=10)
     {
-        return User::select('id', 'name', 'address', 'phone', 'gmail')->where("role",$user)->paginate($soluong);
+        return User::select('id', 'name', 'address', 'phone', 'gmail','trangthai','role')->where("role",$user)->paginate($soluong);
     }
     public function searchUsersByAdmin($role,$search){
         $users= User::select(["id", "name", "phone", "gmail", "address"])->where("role", "=", $role)->where(function($query) use ($search) {
@@ -39,6 +39,17 @@ class UserService
         ->orWhere('gmail', 'like', '%' . strtolower($search) . '%');
         })->get();
         return $users;
+    }
+    public function thayDoiTrangThaiUser($id,$trangthai){
+        DB::beginTransaction();
+        try {
+            DB::update('update users set trangthai = ? where id = ?', [$trangthai,$id]);
+            DB::commit();
+            return false;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return $e->getMessage();
+        }
     }
     public function deleteUserByAdmin($id){
         DB::beginTransaction();

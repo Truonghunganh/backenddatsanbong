@@ -75,6 +75,13 @@ class DatSanController extends Controller
             
             $tonkenUser=$this->checkTokenService->checkTokenUser($request);
             if($tonkenUser){
+                if (!$tonkenUser->trangthai) {
+                    return response()->json([
+                        'status' => false,
+                        'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                        'message' => "Tài khoản của bạn đã bị khóa , không thể đặt sân được",
+                    ]);
+                }
                 $san=$this->sanService->getSanByIdVaTrangThai($request->get('idsan'),1);
                 if (!$san) {
                     return response()->json([

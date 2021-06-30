@@ -20,6 +20,67 @@ class UserController extends Controller
         $this->userService = $userService;
         $this->checkTokenService = $checkTokenService;
     }
+    public function thayDoiTrangThaiUser(Request $request){
+        try {
+            $validator = Validator::make($request->all(), [
+                'iduser' => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                    'message' => $validator->errors()
+                ]);
+            }
+            $id=$request->get('id');
+            $admin = $this->checkTokenService->checkTokenAdmin($request);
+            if ($admin) {
+                $user = $this->userService->findById($id);
+                if (!$user) {
+                    return response()->json([
+                        'status' => false,
+                        'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                        'message' => "không tìm thấy có id =" . $id
+                    ]);
+                }
+                if ($user->role != 'user') {
+                    return response()->json([
+                        'status' => false,
+                        'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                        'message' => "đây không phải là người dùng"
+                    ]);
+                }
+                $trangthai=!$user->trangthai;
+                $thaidoi= $this->userService->thayDoiTrangThaiUser($id, $trangthai);
+                if ($thaidoi) {
+                    return response()->json([
+                        'status' => false,
+                        'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                        'message' => $thaidoi
+                    ]);
+                }
+                return response()->json([
+                    'status' => true,
+                    'code' => Response::HTTP_OK,
+                    'message' => "đã thay đổi trạng thái thành công có id = " . $id
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                    'message' => "token sai"
+                ]);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                'message' => $e->getMessage()
+            ]);
+        }
+
+    }
     public function destroy(Request $request, $id)
     {
         try {
@@ -125,9 +186,9 @@ class UserController extends Controller
             }
 
             $tonken = $this->checkTokenService->checkTokenAdmin($request);
-            $soluong = $request->get('soluong') ?? 10;
-            $users=$this->userService->getUserByAdmin($request->get("user"),$soluong);
             if ($tonken) {
+                $soluong = $request->get('soluong') ?? 10;
+                $users = $this->userService->getUserByAdmin($request->get("user"), $soluong);
                 return response()->json([
                     'status' => true,
                     'code' => Response::HTTP_OK,

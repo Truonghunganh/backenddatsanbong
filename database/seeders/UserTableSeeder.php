@@ -22,10 +22,13 @@ class UserTableSeeder extends Seeder
             $data = [
                 "name" => $tens[$i],
                 "role" => "user",
+                "trangthai" => 1,
                 "phone" => $phones[$i],
                 "gmail" => $phones[$i]."@gmail.com",
                 "address" => $diachis[$i],
                 "password" => bcrypt($phones[$i]),
+                "created_at" => Carbon::now(),
+                "updated_at" => Carbon::now(),
                 "Create_time" => Carbon::now()
             ];
             User::insert($data);
@@ -42,10 +45,13 @@ class UserTableSeeder extends Seeder
         $data=[
             "name"=>"Dương huỳnh quang",
             "role"=>"user",
+            "trangthai" => 1,
             "phone"=>$phone,
             "gmail"=>"quang@gmail.com",
             "address"=>"thành Phố thừa thiên huế",
             "password" => bcrypt($phone),
+            "created_at" => Carbon::now(),
+            "updated_at" => Carbon::now(),
             "Create_time" => Carbon::now()
         ];
         User::insert($data);
@@ -61,10 +67,13 @@ class UserTableSeeder extends Seeder
         $data = [
             "name" => "Nguyễn Đình Hân",
             "role" => "user",
+            "trangthai" => 1,
             "phone" => $phone,
             "gmail" => "han@gmail.com",
             "address" => "điện Phước -điện bàn-quảng nam",
             "password" =>bcrypt ($phone),
+            "created_at" => Carbon::now(),
+            "updated_at" => Carbon::now(),
             "Create_time"=> Carbon::now()
         ];
         User::insert($data);
@@ -79,10 +88,13 @@ class UserTableSeeder extends Seeder
         $data = [
             "name" => "Trương Hùng Anh",
             "role" => "innkeeper",
+            "trangthai" => 1,
             "phone" => "0812250590",
             "gmail" => "hunganh250590@gmail.com",
             "address" => "nhị dinh 3-điện Phước -điện bàn-quảng nam",
             "password" => bcrypt("0812250590"),
+            "created_at" => Carbon::now(),
+            "updated_at" => Carbon::now(),
             "Create_time" => Carbon::now()
         ];
         User::insert($data);
@@ -97,10 +109,13 @@ class UserTableSeeder extends Seeder
         $data = [
             "name" => "Võ đức hùng sơn",
             "role" => "innkeeper",
+            "trangthai" => 1,
             "phone" => $phone,
             "gmail" => "son@gmail.com",
             "address" => "thành Phố thừa thiên huế",
             "password" => bcrypt($phone),
+            "created_at" => Carbon::now(),
+            "updated_at" => Carbon::now(),
             "Create_time" => Carbon::now()
         ];
         User::insert($data);
@@ -115,10 +130,13 @@ class UserTableSeeder extends Seeder
         $data = [
             "name" => "nguyễn thái quyên",
             "role" => "innkeeper",
+            "trangthai" => 1,
             "phone" => $phone,
             "gmail" => "quyen@gmail.com",
             "address" => "Điện hòa-điện bàn-quảng nam",
             "password" => bcrypt($phone),
+            "created_at" => Carbon::now(),
+            "updated_at" => Carbon::now(),
             "Create_time" => Carbon::now()
         ];
         User::insert($data);
@@ -133,10 +151,13 @@ class UserTableSeeder extends Seeder
         $data = [
             "name" => "Trương Ngọc Hào",
             "role" => "innkeeper",
+            "trangthai" => 1,
             "phone" => $phone,
             "gmail" => "Hao@gmail.com",
             "address" => "thành Phố thừa thiên huế",
             "password" => bcrypt($phone),
+            "created_at" => Carbon::now(),
+            "updated_at" => Carbon::now(),
             "Create_time" => Carbon::now()
         ];
 
@@ -153,10 +174,13 @@ class UserTableSeeder extends Seeder
         $data = [
             "name" => "Trương Ánh Diệu",
             "role" => "innkeeper",
+            "trangthai" => 1,
             "phone" => $phone,
             "gmail" => "anhdieu@gmail.com",
             "address" => "thành Phố thừa thiên huế",
             "password" => bcrypt($phone),
+            "created_at" => Carbon::now(),
+            "updated_at" => Carbon::now(),
             "Create_time" => Carbon::now()
         ];
 
@@ -174,10 +198,13 @@ class UserTableSeeder extends Seeder
         $data = [
             "name" => "Trương Phú Một",
             "role" => "innkeeper",
+            "trangthai" => 1,
             "phone" => $phone,
             "gmail" => "phumot@gmail.com",
             "address" => "thành Phố thừa thiên huế",
             "password" => bcrypt($phone),
+            "created_at" => Carbon::now(),
+            "updated_at" => Carbon::now(),
             "Create_time" => Carbon::now()
         ];
 
@@ -194,11 +221,14 @@ class UserTableSeeder extends Seeder
         $phone = "0935291246";
         $data = [
             "name" => "Trần Thị Lệ Hương",
-            "role" => "innkeeper",
+            "trangthai" => 1,
+             "role" => "innkeeper",
             "phone" => $phone,
             "gmail" => "huong@gmail.com",
             "address" => "thành Phố thừa thiên huế",
             "password" => bcrypt($phone),
+            "created_at" => Carbon::now(),
+            "updated_at" => Carbon::now(),
             "Create_time" => Carbon::now()
         ];
 
@@ -216,11 +246,14 @@ class UserTableSeeder extends Seeder
         for ($i = 0; $i < 5; $i++) {
             $data = [
                 "name" => $tens[$i],
+                "trangthai" => 1,
                 "role" => "innkeeper",
                 "phone" => $phones[$i],
                 "gmail" => $phones[$i] . "@gmail.com",
                 "address" => $diachis[$i],
                 "password" => bcrypt($phones[$i]),
+                "created_at" => Carbon::now(),
+                "updated_at" => Carbon::now(),
                 "Create_time" => Carbon::now()
             ];
             User::insert($data);
@@ -238,11 +271,14 @@ class UserTableSeeder extends Seeder
         $data = [
             "name" => "đồ thị minh thúy",
             "role" => "admin",
+            "trangthai" =>1,
             "phone" => $phone,
             "gmail" => "thuy@gmail.com",
             "address" => "Điện hòa-điện bàn-quảng nam",
             "password" => bcrypt($phone),
-            "Create_time" => Carbon::now()
+            "Create_time" => Carbon::now(),
+            "created_at" => Carbon::now(),
+            "updated_at" => Carbon::now(),
         ];
         User::insert($data);
         $user = User::where("phone", "=", $phone)->get();
