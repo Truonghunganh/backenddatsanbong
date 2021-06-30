@@ -69,35 +69,39 @@ class DatSanTableSeeder extends Seeder
                             $k=mt_rand(0, count($gios));
                             for ($gio=0; $gio <$k ; $gio++) {
                                 // đặt sân
-                                $user= $users[mt_rand(0, count($users) - 1)];
-                                $data = [
-                                    "idsan" => $sans[$i]->id,
-                                    "iduser" => $user->id,
-                                    "start_time"=>$nam."-".$thang."-".$ngay." ".$gios[$gio][mt_rand(0, count($gios[$gio])-1)],
-                                    "price"=>$sans[$i]->priceperhour,
-                                    "xacnhan"=>true,
-                                    "Create_time"=> Carbon::now()   
-
-                                ];    
-                                DatSan::insert($data);
-                                // doanh thu
-                                $doanhthuold = DoanhThu::where("idquan", $quan->id)->whereYear("time", $nam)->whereMonth("time", $thang)->whereDay('time', $ngay)->first();
-                                if ($doanhthuold) {
-                                    DB::update('update doanhthus set doanhthu = ? where id= ?', [(int)$doanhthuold->doanhthu+ (int)$sans[$i]->priceperhour,$doanhthuold->id]);
-                                } else {
+                                $m=mt_rand(0, 3);
+                                if ($m!=0) {
+                                    $user = $users[mt_rand(0, count($users) - 1)];
                                     $data = [
-                                        "idquan" => $quan->id,
-                                        "doanhthu" => $sans[$i]->priceperhour,
-                                        "time" => $nam . "-" . $thang . "-" . $ngay . " 00:00:00"
+                                        "idsan" => $sans[$i]->id,
+                                        "iduser" => $user->id,
+                                        "start_time" => $nam . "-" . $thang . "-" . $ngay . " " . $gios[$gio][mt_rand(0, count($gios[$gio]) - 1)],
+                                        "price" => $sans[$i]->priceperhour,
+                                        "xacnhan" => true,
+                                        "Create_time" => Carbon::now()
+
                                     ];
-                                    DoanhThu::insert($data);            
-                                }
-                                // chọn quán
-                                $chonquan=DB::table('chonquans')->where("iduser",$user->id)->where("idquan", $quan->id)->first();
-                                if ($chonquan) {
-                                    DB::update('update chonquans set solan = ? where id = ?', [$chonquan->solan+1, $chonquan->id]);
-                                } else {
-                                    DB::insert('insert into chonquans (iduser, idquan,solan) values (?, ?,?)', [$user->id, $quan->id,1]);
+                                    DatSan::insert($data);
+                                    // doanh thu
+                                    $doanhthuold = DoanhThu::where("idquan", $quan->id)->whereYear("time", $nam)->whereMonth("time", $thang)->whereDay('time', $ngay)->first();
+                                    if ($doanhthuold) {
+                                        DB::update('update doanhthus set doanhthu = ? where id= ?', [(int)$doanhthuold->doanhthu + (int)$sans[$i]->priceperhour, $doanhthuold->id]);
+                                    } else {
+                                        $data = [
+                                            "idquan" => $quan->id,
+                                            "doanhthu" => $sans[$i]->priceperhour,
+                                            "time" => $nam . "-" . $thang . "-" . $ngay . " 00:00:00"
+                                        ];
+                                        DoanhThu::insert($data);
+                                    }
+                                    // chọn quán
+                                    $chonquan = DB::table('chonquans')->where("iduser", $user->id)->where("idquan", $quan->id)->first();
+                                    if ($chonquan) {
+                                        DB::update('update chonquans set solan = ? where id = ?', [$chonquan->solan + 1, $chonquan->id]);
+                                    } else {
+                                        DB::insert('insert into chonquans (iduser, idquan,solan) values (?, ?,?)', [$user->id, $quan->id, 1]);
+                                    }
+                                    
                                 }
                                 
                             }
