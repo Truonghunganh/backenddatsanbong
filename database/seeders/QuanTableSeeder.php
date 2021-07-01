@@ -16,7 +16,7 @@ class QuanTableSeeder extends Seeder
         $data = [
             "name" => "Sân bóng - Đại học bách khoa",
             "image"=>"image/Quan/mu.jpg",
-            "address"=>"60-Ngô Sĩ liên-Đà nẵng",
+            "address"=>"60-Ngô Sĩ liên-Niên Chiểu-Đà nẵng",
             "phone" => "0812250590",
             "linkaddress" => "https://www.google.com/maps/place/S%C3%A2n+b%C3%B3ng+-+%C4%90%E1%BA%A1i+h%E1%BB%8Dc+b%C3%A1ch+khoa,+Ho%C3%A0+Kh%C3%A1nh+B%E1%BA%AFc,+Li%C3%AAn+Chi%E1%BB%83u,+%C4%90%C3%A0+N%E1%BA%B5ng+550000,+Vi%E1%BB%87t+Nam/@16.0736302,108.1521688,17z/data=!3m1!4b1!4m5!3m4!1s0x314218d763876437:0x8b64a3ef3c6b3e58!8m2!3d16.0737726!4d108.1543554?hl=vi-VN",
             "vido" => "16.0737726",

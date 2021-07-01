@@ -21,7 +21,7 @@ class CommentService
         $commentsnew = [];
         $reviews = $this->reviewService->getAllReviewByIdquan($idquan);
         for ($i = 0; $i < count($reviews); $i++) {
-            $usernew = $this->userService->getUserById($reviews[$i]->iduser);
+            $usernew = $this->userService->findById($reviews[$i]->iduser);
                 
             $comments = Comment::where('idreview', $reviews[$i]->id)->get();
             for ($j = 0; $j < count($comments); $j++) {
@@ -49,7 +49,7 @@ class CommentService
         $reviews=$this->reviewService->getAllReviewByIdquan($idquan);
         for ($i=0; $i < count($reviews); $i++) { 
             if ($user->id != $reviews[$i]->iduser) {
-                $usernew = $this->userService->getUserById($reviews[$i]->iduser);
+                $usernew = $this->userService->findById($reviews[$i]->iduser);
                 $quyenUpdate=0;
             }
             $comments = Comment::where('idreview', $reviews[$i]->id)->get();
