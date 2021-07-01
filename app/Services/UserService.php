@@ -22,6 +22,7 @@ class UserService
             return DB::table('datsans')->where('iduser', $request->get('iduser'));
         }
         return [];
+        
     }
     public function findById($id){
         return DB::table('users')->select('id','role','name','phone','gmail','address','trangthai')->where('id', $id)->first();
