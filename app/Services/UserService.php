@@ -33,7 +33,7 @@ class UserService
         return User::select('id', 'name', 'address', 'phone', 'gmail','trangthai','role')->where("role",$user)->paginate($soluong);
     }
     public function searchUsersByAdmin($role,$search){
-        $users= User::select(["id", "name", "phone", "gmail", "address"])->where("role", "=", $role)->where(function($query) use ($search) {
+        $users= User::select(["id", "name", "phone", "gmail", "address","role","trangthai"])->where("role", "=", $role)->where(function($query) use ($search) {
         $query->where('name', 'like', '%' . strtolower($search) . '%')
         ->orWhere("phone", 'like', '%' . strtolower($search) . '%')
         ->orWhere('address', 'like', '%' . strtolower($search) . '%')
