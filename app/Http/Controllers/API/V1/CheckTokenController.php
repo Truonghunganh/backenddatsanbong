@@ -279,7 +279,7 @@ class CheckTokenController extends Controller
                     return response()->json([
                         'status' => false,
                         'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
-                        'message' => "bạn không có quyền truy cập đến quán này vì quán này không tồn tại hoặc chưa cho hoạt động"
+                        'message' => "bạn không có quyền truy cập đến quán này vì quán này không tồn tại hoặc Admin chưa cho hoạt động"
                     ]);
                 }
                 if($quan->phone!=$checkToken->phone) {
