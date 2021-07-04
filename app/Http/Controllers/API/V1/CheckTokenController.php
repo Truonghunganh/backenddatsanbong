@@ -274,12 +274,19 @@ class CheckTokenController extends Controller
 
             $checkToken = $this->checkTokenService->checkTokenInnkeeper($request);
             if ($checkToken) {
-                $quan = $this->quanService->findById($request->get('idquan'));
+                $quan = $this->quanService->findByIdVaTrangThai($request->get('idquan'),1);
+                if (!$quan) {
+                    return response()->json([
+                        'status' => false,
+                        'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                        'message' => "bạn không có quyền truy cập đến quán này vì quán này không tồn tại hoặc chưa cho hoạt động"
+                    ]);
+                }
                 if($quan->phone!=$checkToken->phone) {
                     return response()->json([
                         'status' => false,
                         'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
-                        'message' => "bạn không có quyền truy cập đến quán này"
+                        'message' => "bạn không có quyền truy cập đến quán này vì quán này không phải là của bạn"
                     ]);    
                 }
                 $user = new User($checkToken->id, $checkToken->name, $checkToken->phone, $checkToken->gmail, $checkToken->address, $checkToken->role);
