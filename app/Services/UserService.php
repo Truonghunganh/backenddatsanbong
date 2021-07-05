@@ -146,7 +146,7 @@ class UserService
                 "phone" => $request->get('phone'),
                 "gmail" => $request->get('gmail'),
                 "address" => $request->get('address'),
-                "password" => bcrypt($request->get('phone')),
+                "password" => bcrypt($request->get('password')),
                 "Create_time" => $time
             ];
             User::insert($data);
